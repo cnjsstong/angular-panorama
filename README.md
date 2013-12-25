@@ -6,8 +6,6 @@ Demo : http://revolunet.github.io/angular-carousel
 
 Comments and contributions welcome :)
 
-Proudly brought to you by the [@revolunet](http://twitter.com/revolunet) team.
-
 ## Usage :
 
  1. Add `angular-carousel.css`, `angular-carousel.js` and `angular-mobile.js` (from this repo) to your code:
@@ -81,4 +79,4 @@ The `prev()` and `next()` function return promises containing the prev and next 
  - Thanks @ganarajpr @bennadel and angular folks for all the tips :)
 
 ## Licence
-As AngularJS itself, this module is released under the permissive [MIT license](http://revolunet.mit-license.org). Your contributions are always welcome.
+As AngularJS itself, this module is released under the permissive [MIT license](http://mit-license.org). Your contributions are always welcome.

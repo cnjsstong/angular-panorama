@@ -1,12 +1,12 @@
 {
   "name": "angular-carousel",
   "description": "Angular Carousel - Mobile friendly touch carousel for AngularJS",
-  "version": "0.0.9",
-  "homepage": "http://revolunet.github.com/angular-carousel",
-  "author": "Julien Bouquillon <julien@revolunet.com>",
+  "version": "0.1.0",
+  "homepage": "http://cnjsstong2.github.com/angular-carousel",
+  "author": "Tong Shen <tshen@farseerinc.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/revolunet/angular-carousel.git"
+    "url": "git://github.com/cnjsstong2/angular-carousel.git"
   },
   "engines": {
     "node": ">= 0.8"
@@ -14,7 +14,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://revolunet.mit-license.org"
+      "url": "http://mit-license.org/"
     }
   ],
   "dependencies": {},

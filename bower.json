@@ -1,16 +1,16 @@
 {
-  "author": "revolunet",
+  "author": "cnjsstong",
   "name": "angular-carousel",
   "description": "Mobile friendly AngularJS carousel",
-  "version": "0.0.8",
-  "homepage": "https://github.com/revolunet/angular-carousel",
+  "version": "0.1.0",
+  "homepage": "https://github.com/cnjsstong2/angular-carousel",
   "repository": {
     "type": "git",
-    "url": "git://github.com/revolunet/angular-carousel.git"
+    "url": "git://github.com/cnjsstong2/angular-carousel.git"
   },
   "main": "./dist/angular-carousel.js",
   "dependencies": {
-    "angular": "PatternConsulting/bower-angular", 
-    "jquery": "1.9.1"
+    "angular": ">= 1.2.0",
+    "jquery": ">= 1.9.0"
   }
 }
