@@ -519,7 +519,7 @@ describe('panorama', function () {
         expect(elm.find('li').last()[0].id).toBe('slide-' + scope.items[scope.items.length - 1].id);
       });
     });
-    
+
   });
   // describe('delayed collection and index', function () {
   //   it('should follow multiple moves and buffer accordingly', function() {

@@ -24,7 +24,7 @@ ul.ng-panorama-slides > li {
   backface-visibility: hidden;
   -webkit-perspective: 1000;
   perspective: 1000;
-} 
+}
 .ng-panorama-animate {
   -webkit-transition: -webkit-transform .1s ease-out;
   -moz-transition: -moz-transform .1s ease-out;

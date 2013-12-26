@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       }
     },
     dirs: {
-      dest: 'dist'
+      dest: '.'
     },
     concat: {
       options: {
