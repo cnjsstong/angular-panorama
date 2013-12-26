@@ -1,12 +1,12 @@
 {
-  "name": "angular-carousel",
-  "description": "Angular Carousel - Mobile friendly touch carousel for AngularJS",
+  "name": "angular-panorama",
+  "description": "Angular Panorama - Mimic Windows Phone's Panorama UI control.",
   "version": "0.1.0",
-  "homepage": "http://cnjsstong2.github.com/angular-carousel",
+  "homepage": "http://cnjsstong2.github.com/angular-panorama",
   "author": "Tong Shen <tshen@farseerinc.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/cnjsstong2/angular-carousel.git"
+    "url": "git://github.com/cnjsstong2/angular-panorama.git"
   },
   "engines": {
     "node": ">= 0.8"

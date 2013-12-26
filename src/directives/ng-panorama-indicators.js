@@ -1,6 +1,6 @@
-angular.module('angular-carousel')
+angular.module('angular-panorama')
 
-.directive('rnCarouselIndicators', [function() {
+.directive('ngPanoramaIndicators', [function() {
   return {
     restrict: 'A',
     replace: true,
@@ -8,7 +8,7 @@ angular.module('angular-carousel')
       items: '=',
       index: '='
     },
-    template: '<div class="rn-carousel-indicator">' +
+    template: '<div class="ng-panorama-indicator">' +
                 '<span ng-repeat="item in items" ng-class="{active: $index==$parent.index}">●</span>' +
               '</div>'
   };

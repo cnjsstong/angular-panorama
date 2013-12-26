@@ -1,21 +1,21 @@
 /*global waits, runs, iit, browserTrigger, beforeEach, afterEach, describe, it, inject, expect, module, angular, $*/
 
-describe('carousel', function () {
+describe('panorama', function () {
   'use strict';
 
   var scope, $compile, $sandbox;
 
 
-  //$('body').append("<link href='/base/dist/angular-carousel.min.css' rel='stylesheet' type='text/css'>");
+  //$('body').append("<link href='/base/dist/angular-panorama.min.css' rel='stylesheet' type='text/css'>");
   $('body').append("<style>ul,li {padding:0;margin:0;width:200px !important} " +
-      ".rn-carousel-animate { -webkit-transition: -webkit-transform 0.001s ease-out; " +
+      ".ng-panorama-animate { -webkit-transition: -webkit-transform 0.001s ease-out; " +
       "-moz-transition: -moz-transform 0.001s ease-out; transition: transform 0.001s ease-out;} "+
-      ".rn-carousel-noanimate {-webkit-transition: none;-moz-transition: none;-ms-transition: none;" +
+      ".ng-panorama-noanimate {-webkit-transition: none;-moz-transition: none;-ms-transition: none;" +
       "-o-transition: none;transition: none;}</style>");
 
   //console.log(document.location);
   beforeEach(
-    module('angular-carousel')
+    module('angular-panorama')
   );
 
   beforeEach(inject(function ($rootScope, _$compile_) {
@@ -54,11 +54,11 @@ describe('carousel', function () {
         id: i
       });
     }
-    var tpl = '<ul rn-carousel ';
-    if (options.useIndicator) tpl += ' rn-carousel-indicator ';
-    if (options.useBuffer) tpl += ' rn-carousel-buffered ';
-    if (options.useWatch) tpl += ' rn-carousel-watch ';
-    if (options.useIndex) tpl += ' rn-carousel-index="' + options.useIndex + '" ';
+    var tpl = '<ul ng-panorama ';
+    if (options.useIndicator) tpl += ' ng-panorama-indicator ';
+    if (options.useBuffer) tpl += ' ng-panorama-buffered ';
+    if (options.useWatch) tpl += ' ng-panorama-watch ';
+    if (options.useIndex) tpl += ' ng-panorama-index="' + options.useIndex + '" ';
     tpl += '><li class="test" style="width:200px" ng-repeat="item in items" id="slide-{{ item.id }}">{{ item.text }}</li></ul>';
     angular.extend(scope, sampleData.scope);
     var $element = $(tpl).appendTo($sandbox);
@@ -73,7 +73,7 @@ describe('carousel', function () {
     return curMatrix;
   }
   function validCSStransform(elm) {
-    var expectedPosition = (elm.outerWidth() * elm.scope().carouselCollection.index * -1),
+    var expectedPosition = (elm.outerWidth() * elm.scope().panoramaCollection.index * -1),
         expectedMatrix = 'matrix(1, 0, 0, 1, ' + expectedPosition + ', 0)',
         curMatrix = getElmTransform(elm);
     expect(curMatrix).toBe(expectedMatrix);
@@ -82,11 +82,11 @@ describe('carousel', function () {
   describe('directive', function () {
     it('should add a wrapper div around the ul/li', function () {
         var elm = compileTpl();
-        expect(elm.parent().hasClass('rn-carousel-container')).toBe(true);
+        expect(elm.parent().hasClass('ng-panorama-container')).toBe(true);
     });
     it('should add a class to the ul', function () {
         var elm = compileTpl();
-        expect(elm.hasClass('rn-carousel-slides')).toBe(true);
+        expect(elm.hasClass('ng-panorama-slides')).toBe(true);
     });
     it('should have enough slides', function () {
         var elm = compileTpl();
@@ -105,7 +105,7 @@ describe('carousel', function () {
           validCSStransform(elm);
         }, 200);
     });
-    it('index change should update the carousel position', function () {
+    it('index change should update the panorama position', function () {
         var elm = compileTpl({useIndex: 'localIndex'});
         scope.localIndex = 5;
         scope.$digest();
@@ -113,11 +113,11 @@ describe('carousel', function () {
           validCSStransform(elm);
         }, 200);
     });
-    it('carousel index should be bound to local index', function () {
+    it('panorama index should be bound to local index', function () {
         var elm = compileTpl({useIndex: 'localIndex'});
         scope.localIndex = 5;
         scope.$digest();
-        expect(elm.scope().carouselCollection.index).toBe(scope.localIndex);
+        expect(elm.scope().panoramaCollection.index).toBe(scope.localIndex);
     });
   });
 
@@ -128,24 +128,24 @@ describe('carousel', function () {
           validCSStransform(elm);
         }, 200);
     });
-    it('index change should update the carousel position', function () {
+    it('index change should update the panorama position', function () {
         // check watcher present even if index is not a bindable attribute
         var elm = compileTpl({useIndex: 5});
-        elm.scope().carouselCollection.goToIndex(9);
+        elm.scope().panoramaCollection.goToIndex(9);
         scope.$digest();
         waitAndCheck(function() {
           validCSStransform(elm);
         }, 200);
     });
-    it('index out of range should set the carousel to last slide', function () {
+    it('index out of range should set the panorama to last slide', function () {
         var elm = compileTpl({useIndex: 100});
-        expect(elm.scope().carouselCollection.index).toBe(scope.items.length - 1);
+        expect(elm.scope().panoramaCollection.index).toBe(scope.items.length - 1);
         expect(elm.find('li').length).toBe(scope.items.length);
         expect(elm.find('li:last')[0].id).toBe('slide-' + (scope.items.length - 1));
     });
-    it('negative index should set the carousel to first slide', function () {
+    it('negative index should set the panorama to first slide', function () {
         var elm = compileTpl({useIndex: -100});
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
         expect(elm.find('li').length).toBe(scope.items.length);
         expect(elm.find('li')[0].id).toBe('slide-0');
     });
@@ -154,11 +154,11 @@ describe('carousel', function () {
   describe('directive with no index defined', function () {
     it('should add a wrapper div around the ul/li', function () {
         var elm = compileTpl({useIndex:false});
-        expect(elm.parent().hasClass('rn-carousel-container')).toBe(true);
+        expect(elm.parent().hasClass('ng-panorama-container')).toBe(true);
     });
     it('should add a class to the ul', function () {
         var elm = compileTpl({useIndex:false});
-        expect(elm.hasClass('rn-carousel-slides')).toBe(true);
+        expect(elm.hasClass('ng-panorama-slides')).toBe(true);
     });
     it('should have enough slides', function () {
         var elm = compileTpl({useIndex:false});
@@ -177,25 +177,25 @@ describe('carousel', function () {
   describe('indicator directive', function () {
     it('should add an indicator div', function () {
         var elm = compileTpl({useIndicator: true});
-        expect(elm.parent().find('.rn-carousel-indicator').length).toBe(1);
+        expect(elm.parent().find('.ng-panorama-indicator').length).toBe(1);
     });
     it('should add enough indicators', function () {
         var elm = compileTpl({useIndicator: true});
-        expect(elm.parent().find('.rn-carousel-indicator span').length).toBe(scope.items.length);
+        expect(elm.parent().find('.ng-panorama-indicator span').length).toBe(scope.items.length);
     });
-    it('should have an active indicator based on the carousel index', function () {
+    it('should have an active indicator based on the panorama index', function () {
         var elm = compileTpl({useIndicator: true});
-        expect(elm.parent().find('.rn-carousel-indicator span:nth-of-type(' + (elm.scope().carouselCollection.index + 1) + ')').hasClass('active')).toBe(true);
+        expect(elm.parent().find('.ng-panorama-indicator span:nth-of-type(' + (elm.scope().panoramaCollection.index + 1) + ')').hasClass('active')).toBe(true);
     });
     it('should update the active indicator when local index changes', function () {
         var elm = compileTpl({useIndicator: true, useIndex: 'localIndex'});
         scope.localIndex = 2;
         scope.$digest();
-        expect(elm.parent().find('.rn-carousel-indicator span:nth-of-type(' + (scope.localIndex + 1) + ')').hasClass('active')).toBe(true);
+        expect(elm.parent().find('.ng-panorama-indicator span:nth-of-type(' + (scope.localIndex + 1) + ')').hasClass('active')).toBe(true);
     });
   });
 
-  describe('buffered carousel', function () {
+  describe('buffered panorama', function () {
     it('should minimize the DOM', function () {
         var elm = compileTpl({useBuffer: true});
         expect(elm.find('li').length).toBe(3);
@@ -214,7 +214,7 @@ describe('carousel', function () {
     });
     it('should position the buffered slides correctly with a out of range index', function () {
         var elm = compileTpl({useBuffer: true, useIndex: '100'});
-        expect(elm.scope().carouselCollection.index).toBe(scope.items.length - 1);
+        expect(elm.scope().panoramaCollection.index).toBe(scope.items.length - 1);
         var firstId = scope.items.length - 3;
         expect(elm.find('li').length).toBe(3);
         expect(elm.find('li')[0].id).toBe('slide-' + firstId);
@@ -222,56 +222,56 @@ describe('carousel', function () {
     });
     it('should position the buffered slides correctly with a negative index', function () {
         var elm = compileTpl({useBuffer: true, useIndex: '-100'});
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
         expect(elm.find('li').length).toBe(3);
         expect(elm.find('li')[0].id).toBe('slide-0');
         expect(elm.find('li:last')[0].id).toBe('slide-' + (3 - 1));
     });
   });
 
-  describe('index property on standard carousel', function () {
+  describe('index property on standard panorama', function () {
     it('should be at 0 on start', function () {
         var elm = compileTpl();
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
     });
     it('should be set at initial position', function () {
         var elm = compileTpl({useIndex: 'localIndex'});
-        expect(elm.scope().carouselCollection.index).toBe(scope.localIndex);
+        expect(elm.scope().panoramaCollection.index).toBe(scope.localIndex);
     });
-    it('should follow carousel position', function () {
+    it('should follow panorama position', function () {
         var elm = compileTpl({useIndex: 'localIndex'});
         scope.localIndex = scope.items.length - 1;
         scope.$digest();
-        expect(elm.scope().carouselCollection.index).toBe(scope.items.length - 1);
+        expect(elm.scope().panoramaCollection.index).toBe(scope.items.length - 1);
     });
   });
 
-  describe('index property on buffered carousel', function () {
+  describe('index property on buffered panorama', function () {
     it('should be at 0 on start', function () {
         var elm = compileTpl({useBuffer: true});
         expect(elm.find('li')[0].id).toBe('slide-0');
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
     });
     it('should be set correctly at initial position', function () {
         var elm = compileTpl({useBuffer: true, useIndex: 'localIndex'});
-        expect(elm.scope().carouselCollection.index).toBe(scope.localIndex);
+        expect(elm.scope().panoramaCollection.index).toBe(scope.localIndex);
         expect(elm.find('li')[0].id).toBe('slide-' + (scope.localIndex - 1));
     });
-    it('should be last item of buffer if carousel last slide', function () {
+    it('should be last item of buffer if panorama last slide', function () {
         var elm = compileTpl({useBuffer: true, useIndex: 'localIndex'});
         scope.localIndex = scope.items.length - 1;
         scope.$digest();
         waitAndCheck(function() {
-          expect(elm.scope().carouselCollection.index).toBe(scope.localIndex);
+          expect(elm.scope().panoramaCollection.index).toBe(scope.localIndex);
           expect(elm.find('li')[0].id).toBe('slide-' + (scope.localIndex - 2));
         });
     });
-    it('should be last item of buffer if carousel last slide', function () {
+    it('should be last item of buffer if panorama last slide', function () {
         var elm = compileTpl({useBuffer: true, useIndex: 'localIndex'});
         scope.localIndex = 100;
         scope.$digest();
         waitAndCheck(function() {
-          expect(elm.scope().carouselCollection.index).toBe(scope.items.length - 1);
+          expect(elm.scope().panoramaCollection.index).toBe(scope.items.length - 1);
           expect(elm.find('li')[0].id).toBe('slide-' + (scope.localIndex-2));
         });
     });
@@ -288,7 +288,7 @@ describe('carousel', function () {
 
   // TODO
   // describe('collection update', function () {
-  //    it('standard carousel should display first slide when we reset the collection', function () {
+  //    it('standard panorama should display first slide when we reset the collection', function () {
   //       var elm = compileTpl({useIndex: 'localIndex'});
   //       scope.localIndex = 5;
   //       scope.$digest();
@@ -298,7 +298,7 @@ describe('carousel', function () {
   //       expect(elm.css('left')).toBe('auto');
   //       expect(elm.scope().activeIndex).toBe(0);
   //   });
-  //   it('buffered carousel should display first slide when we reset the collection', function () {
+  //   it('buffered panorama should display first slide when we reset the collection', function () {
   //       var elm = compileTpl({useBuffer: true, useIndex: 'localIndex'});
   //       scope.localIndex = 5;
   //       scope.$digest();
@@ -311,7 +311,7 @@ describe('carousel', function () {
   // });
 
   function fakeMove(elm, distance) {
-    // trigger a carousel swipe movement
+    // trigger a panorama swipe movement
     var startX = 100,
         startY = 10,
         endX = distance + startX;
@@ -334,49 +334,49 @@ describe('carousel', function () {
         // yes, backwards swipe means positive pixels count :)
         var elm = compileTpl();
         fakeMove(elm, minMove);
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
     });
     it('should not show next slide if swipe forward at last slide', function() {
         var elm = compileTpl();
-        elm.scope().carouselCollection.goToIndex(scope.items.length - 1);
+        elm.scope().panoramaCollection.goToIndex(scope.items.length - 1);
         fakeMove(elm, -minMove);
-        expect(elm.scope().carouselCollection.index).toBe(scope.items.length - 1);
+        expect(elm.scope().panoramaCollection.index).toBe(scope.items.length - 1);
     });
     it('should move slide backward if backwards swipe at index > 0', function() {
         var elm = compileTpl({useIndex: 1});
         fakeMove(elm, minMove);
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
     });
     it('should move to next slide on swipe forward', function() {
         var elm = compileTpl();
         fakeMove(elm, -minMove);
-        expect(elm.scope().carouselCollection.index).toBe(1);
+        expect(elm.scope().panoramaCollection.index).toBe(1);
     });
     it('should not move to next slide on too little swipe forward', function() {
         var elm = compileTpl();
         fakeMove(elm, -12);
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
     });
     it('should not move to prev slide on too little swipe backward', function() {
         var elm = compileTpl({useIndex: 1});
         fakeMove(elm, 12);
-        expect(elm.scope().carouselCollection.index).toBe(1);
+        expect(elm.scope().panoramaCollection.index).toBe(1);
     });
     it('should follow multiple moves', function() {
         var elm = compileTpl();
        // var minMove = -(elm.outerWidth() * 0.1 + 1);
         fakeMove(elm, -minMove);
-        //console.log(minMove, elm.scope().carouselCollection.index);
+        //console.log(minMove, elm.scope().panoramaCollection.index);
         fakeMove(elm,-minMove);
         fakeMove(elm, -minMove);
-        expect(elm.scope().carouselCollection.index).toBe(3);
+        expect(elm.scope().panoramaCollection.index).toBe(3);
         fakeMove(elm, minMove);
         fakeMove(elm, minMove);
-        expect(elm.scope().carouselCollection.index).toBe(1);
+        expect(elm.scope().panoramaCollection.index).toBe(1);
         fakeMove(elm, minMove);
         fakeMove(elm, minMove);
         fakeMove(elm, minMove);
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
     });
   });
 
@@ -387,19 +387,19 @@ describe('carousel', function () {
         fakeMove(elm, minMove);
 
         waitAndCheck(function() {
-          expect(elm.scope().carouselCollection.index).toBe(1);
+          expect(elm.scope().panoramaCollection.index).toBe(1);
           expect(elm.find('li')[0].id).toBe('slide-0');
           fakeMove(elm, minMove);
           waitAndCheck(function() {
-            expect(elm.scope().carouselCollection.index).toBe(2);
+            expect(elm.scope().panoramaCollection.index).toBe(2);
             expect(elm.find('li')[0].id).toBe('slide-1');
             fakeMove(elm, -minMove);
             waitAndCheck(function() {
-              expect(elm.scope().carouselCollection.index).toBe(1);
+              expect(elm.scope().panoramaCollection.index).toBe(1);
               expect(elm.find('li')[0].id).toBe('slide-0');
               fakeMove(elm, -minMove);
               waitAndCheck(function() {
-                expect(elm.scope().carouselCollection.index).toBe(0);
+                expect(elm.scope().panoramaCollection.index).toBe(0);
                 expect(elm.find('li')[0].id).toBe('slide-0');
               });
             });
@@ -414,12 +414,12 @@ describe('carousel', function () {
         var elm = compileTpl({useIndex: 'localIndex'});
         scope.localIndex = 5;
         scope.$digest();
-        expect(elm.scope().carouselCollection.index).toBe(5);
+        expect(elm.scope().panoramaCollection.index).toBe(5);
         scope.items = [{id:1}, {id:2}];
         scope.$digest();
         expect(elm.position().left).toBe(0);
         expect(elm.css('left')).toBe('auto');
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
       });
       it('should NOT update slides when collection changes partially', function() {
         var elm = compileTpl();
@@ -442,16 +442,16 @@ describe('carousel', function () {
         var elm = compileTpl({useBuffer: true, useIndex: 'localIndex'});
         scope.localIndex = 5;
         scope.$digest();
-        expect(elm.scope().carouselCollection.index).toBe(5);
+        expect(elm.scope().panoramaCollection.index).toBe(5);
         scope.items = [{id:1}, {id:2}];
         scope.$digest();
         expect(elm.position().left).toBe(0);
         expect(elm.css('left')).toBe('auto');
-        expect(elm.scope().carouselCollection.index).toBe(0);
+        expect(elm.scope().panoramaCollection.index).toBe(0);
       });
       it('should NOT update slides when collection changes partially', function() {
         var elm = compileTpl({useBuffer: true});
-        var originalLength = elm.scope().carouselCollection.bufferSize;
+        var originalLength = elm.scope().panoramaCollection.bufferSize;
         expect(elm.find('li').length).toBe(originalLength);
         scope.items.push({'text': 'new item', 'id': 999});
         scope.$digest();
@@ -470,12 +470,12 @@ describe('carousel', function () {
           var elm = compileTpl({useIndex: 'localIndex', useWatch: true});
           scope.localIndex = 5;
           scope.$digest();
-          expect(elm.scope().carouselCollection.index).toBe(5);
+          expect(elm.scope().panoramaCollection.index).toBe(5);
           scope.items = [{id:1}, {id:2}];
           scope.$digest();
           expect(elm.position().left).toBe(0);
           expect(elm.css('left')).toBe('auto');
-          expect(elm.scope().carouselCollection.index).toBe(0);
+          expect(elm.scope().panoramaCollection.index).toBe(0);
       });
       it('should update slides when collection changes partially', function() {
         var elm = compileTpl({useWatch: true});
@@ -497,12 +497,12 @@ describe('carousel', function () {
           var elm = compileTpl({userBuffer:true, useIndex: 'localIndex', useWatch: true});
           scope.localIndex = 5;
           scope.$digest();
-          expect(elm.scope().carouselCollection.index).toBe(5);
+          expect(elm.scope().panoramaCollection.index).toBe(5);
           scope.items = [{id:1}, {id:2}];
           scope.$digest();
           expect(elm.position().left).toBe(0);
           expect(elm.css('left')).toBe('auto');
-          expect(elm.scope().carouselCollection.index).toBe(0);
+          expect(elm.scope().panoramaCollection.index).toBe(0);
       });
       it('should update slides when collection changes partially', function() {
         var elm = compileTpl({userBuffer:true, useWatch: true});
@@ -529,13 +529,13 @@ describe('carousel', function () {
   //       var elm = compileTpl({useBuffer: true, useIndex: "localIndex", nbItems: 5});
   //       scope.localIndex = 2;
   //       scope.$digest();
-  //       expect(elm.scope().carouselBufferStart).toBe(1);
+  //       expect(elm.scope().panoramaBufferStart).toBe(1);
   //   });
   //   it('should initialise buffer start correctly when index is set at 0', function() {
   //       var elm = compileTpl({useBuffer: true, useIndex: "localIndex", nbItems: 5});
   //       scope.localIndex = 0;
   //       scope.$digest();
-  //       expect(elm.scope().carouselBufferStart).toBe(0);
+  //       expect(elm.scope().panoramaBufferStart).toBe(0);
   //   });
     // it('should initialise buffer start correctly when index is set at last item', function() {
     //     var nbItems = 5;
@@ -545,22 +545,22 @@ describe('carousel', function () {
     //     console.log(elm.scope().activeIndex);
     //     waits(10);
     //     runs(function() {
-    //         expect(elm.scope().carouselBufferStart).toBe(nbItems - elm.scope().carouselBufferSize);
+    //         expect(elm.scope().panoramaBufferStart).toBe(nbItems - elm.scope().panoramaBufferSize);
     //     });
     // });
     // it('buffer position should update when local index changes', function() {
     //     var elm = compileTpl({useBuffer: true, useIndex: "localIndex", nbItems: 5});
     //     scope.localIndex = 2;
     //     scope.$digest();
-    //     expect(elm.scope().carouselBufferStart).toBe(1);
+    //     expect(elm.scope().panoramaBufferStart).toBe(1);
     //     scope.localIndex = 3;
     //     scope.$digest();
     //     waits(100);
     //     runs(function() {
-    //         expect(elm.scope().carouselBufferStart).toBe(1);
+    //         expect(elm.scope().panoramaBufferStart).toBe(1);
     //         scope.localIndex = 0;
     //         scope.$digest();
-    //         expect(elm.scope().carouselBufferStart).toBe(0);
+    //         expect(elm.scope().panoramaBufferStart).toBe(0);
     //     });
     // });
   //});

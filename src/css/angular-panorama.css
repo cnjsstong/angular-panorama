@@ -1,11 +1,11 @@
 /*
-generic styles applied to any carousel
+generic styles applied to any panorama
 must be ul/li 
 */
-.rn-carousel-container {
+.ng-panorama-container {
   overflow: hidden;
 }
-ul.rn-carousel-slides {
+ul.ng-panorama-slides {
   position: relative;
   white-space: nowrap;
   overflow: visible;
@@ -15,7 +15,7 @@ ul.rn-carousel-slides {
   padding: 0;
   margin: 0;
 }
-ul.rn-carousel-slides > li {
+ul.ng-panorama-slides > li {
   white-space: normal;
   vertical-align:top;
   display: inline-block;
@@ -26,19 +26,19 @@ ul.rn-carousel-slides > li {
   -webkit-perspective: 1000;
   perspective: 1000;
 } 
-.rn-carousel-animate {
+.ng-panorama-animate {
   -webkit-transition: -webkit-transform .1s ease-out;
   -moz-transition: -moz-transform .1s ease-out;
   transition: transform .1s ease-out;
 }
-.rn-carousel-noanimate {
+.ng-panorama-noanimate {
   -webkit-transition: none;
   -moz-transition: none;
   -ms-transition: none;
   -o-transition: none;
   transition: none;
 }
-.rn-carousel-indicator {
+.ng-panorama-indicator {
   width: 100%;
   text-align:center;
   position:relative;
@@ -47,11 +47,11 @@ ul.rn-carousel-slides > li {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.6);
 }
-.rn-carousel-indicator span {
+.ng-panorama-indicator span {
   padding: 0 5px;
   color: #333;
   transition: color .2s ease-out;
 }
-.rn-carousel-indicator span.active {
+.ng-panorama-indicator span.active {
   color:white;
 }

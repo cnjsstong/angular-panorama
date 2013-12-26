@@ -1,14 +1,14 @@
 /**
- * Angular Carousel - Mobile friendly touch carousel for AngularJS
- * @version v0.0.9 - 2013-10-11
- * @link http://revolunet.github.com/angular-carousel
- * @author Julien Bouquillon <julien@revolunet.com>
+ * Angular Panorama - Mimic Windows Phone's Panorama UI control.
+ * @version v0.1.0 - 2013-12-26
+ * @link http://cnjsstong2.github.com/angular-panorama
+ * @author Tong Shen <tshen@farseerinc.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 /*global angular */
 
 /*
-Angular touch carousel with CSS GPU accel and slide buffering/cycling
+Angular touch panorama with CSS GPU accel and slide buffering/cycling
 http://github.com/revolunet/angular-carousel
 
 TODO : 
@@ -19,11 +19,11 @@ TODO :
  - cycle + indicator
 */
 
-angular.module('angular-carousel', ['ngMobile']);
+angular.module('angular-panorama', ['ngTouch']);
 
-angular.module('angular-carousel')
+angular.module('angular-panorama')
 
-.directive('rnCarouselIndicators', [function() {
+.directive('ngPanoramaIndicators', [function() {
   return {
     restrict: 'A',
     replace: true,
@@ -37,9 +37,9 @@ angular.module('angular-carousel')
   };
 }]);
 
-angular.module('angular-carousel')
+angular.module('angular-panorama')
 
-.directive('rnCarouselInfinite', ['$parse', '$compile', function($parse, $compile) {
+.directive('ngPanoramaInfinite', ['$parse', '$compile', function($parse, $compile) {
   return {
     restrict: 'EA',
     transclude:  true,
@@ -61,9 +61,9 @@ angular.module('angular-carousel')
   };
 }]);
 
-angular.module('angular-carousel')
+angular.module('angular-panorama')
 
-.directive('rnCarousel', ['$compile', '$parse', '$swipe', '$document', '$window', 'CollectionManager', function($compile, $parse, $swipe, $document, $window, CollectionManager) {
+.directive('ngPanorama', ['$compile', '$parse', '$swipe', '$document', '$window', 'CollectionManager', function($compile, $parse, $swipe, $document, $window, CollectionManager) {
   /* track number of carousel instances */
   var carousels = 0;
 
@@ -456,7 +456,7 @@ angular.module('angular-carousel')
 * - rearrange items if buffered or cycle
 * - the service is just a wrapper around a non-angular collection manager
 **/
-angular.module('angular-carousel')
+angular.module('angular-panorama')
 
 .service('CollectionManager', [function() {
 

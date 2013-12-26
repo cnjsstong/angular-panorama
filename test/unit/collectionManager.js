@@ -8,7 +8,7 @@ describe("CollectionManager", function() {
         items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         index: 1
     };
-    beforeEach(module('angular-carousel'));
+    beforeEach(module('angular-panorama'));
 
     var CollectionManagerService;
     beforeEach(inject(function(CollectionManager) {

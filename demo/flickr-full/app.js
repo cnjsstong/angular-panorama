@@ -15,7 +15,7 @@ function partition(items, size) {
   return p;
 }
 
-angular.module('myApp', ['angular-carousel', 'snap', 'truncate', 'angular-lazy'])
+angular.module('myApp', ['angular-panorama', 'snap', 'truncate', 'angular-lazy'])
   .controller('demoController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 
     var modalOpened = null;

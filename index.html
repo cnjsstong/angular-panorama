@@ -95,25 +95,25 @@
     </style>
   </head>
   <body ng-app="myApp" ng-controller='demoController'>
-    <a href="https://github.com/revolunet/angular-carousel"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
-    <h1>AngularJS Touch Carousel</h1>
-    <div class='intro'>Transform your ng-repeat or DOM nodes in a mobile-friendly carousel just by adding a 'rn-carousel' attribute to your ul/li block, thanks to AngularJS magic :)<br><br>
-    Carousels are data-bound to your ngRepeat collections, can be DOM buffered (good for performance), can cycle over your fixed collection or receive on-demand slides for infinite carousels :)
+    <a href="https://github.com/revolunet/angular-panorama"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <h1>AngularJS Touch panorama</h1>
+    <div class='intro'>Transform your ng-repeat or DOM nodes in a mobile-friendly panorama just by adding a 'ng-panorama' attribute to your ul/li block, thanks to AngularJS magic :)<br><br>
+    panoramas are data-bound to your ngRepeat collections, can be DOM buffered (good for performance), can cycle over your fixed collection or receive on-demand slides for infinite panoramas :)
     <br><br>
     Try to swipe these demos with your mouse or your finger :
     </div>
 
-    <h3>Simple carousel</h3>
-    A very basic carousel with indicators<br><br>
-    <ul rn-carousel rn-carousel-indicator class="image">
+    <h3>Simple panorama</h3>
+    A very basic panorama with indicators<br><br>
+    <ul ng-panorama ng-panorama-indicator class="image">
       <li ng-repeat="image in cityImages" style="background-image:url({{ image }});">
         <div class="layer" ng-bind-html-unsafe="image"></div>
       </li>
     </ul>
 
-    <h3>Simple carousel without ng-repeat</h3>
-    This carousel use the ul/li structure to generate the slides<br><br>
-    <ul rn-carousel rn-carousel-indicator class="puredom">
+    <h3>Simple panorama without ng-repeat</h3>
+    This panorama use the ul/li structure to generate the slides<br><br>
+    <ul ng-panorama ng-panorama-indicator class="puredom">
       <li>Slide #1</li>
       <li>Slide #2</li>
       <li>Slide #3</li>
@@ -124,17 +124,17 @@
 
 
 <!--
-    <h3>Forever carousel</h3>
-    A carousel that cycles forever<br><br>
-    <ul rn-carousel rn-carousel-cycle rn-carousel-indicator class="image">
+    <h3>Forever panorama</h3>
+    A panorama that cycles forever<br><br>
+    <ul ng-panorama ng-panorama-cycle ng-panorama-indicator class="image">
       <li data-ng-repeat="image in cityImages2" style="background-image:url({{ image }});">
         <div class="layer" ng-bind-html-unsafe="image"></div>
       </li>
     </ul>
 
-    <h3>Forever buffered carousel</h3>
-    A cycling buffered carousel<br><br>
-    <ul rn-carousel rn-carousel-cycle rn-carousel-buffered class="image">
+    <h3>Forever buffered panorama</h3>
+    A cycling buffered panorama<br><br>
+    <ul ng-panorama ng-panorama-cycle ng-panorama-buffered class="image">
       <li ng-repeat="image in cityImages2" style="background-image:url({{ image }});">
         <div class="layer" ng-bind-html-unsafe="image"></div>
       </li>
@@ -143,8 +143,8 @@
 
 
     <h3 data-ng-bind-html-unsafe="'Discover sports (slide ' + (currentSport + 1) + '/' + sportImages.length + ')'"></h3>
-    This carousel has two way data-binding, custom controls and is buffered (only 3 slides rendered)<br><br>
-    <ul data-rn-carousel rn-carousel-buffered rn-carousel-index="currentSport" class="image">
+    This panorama has two way data-binding, custom controls and is buffered (only 3 slides rendered)<br><br>
+    <ul data-ng-panorama ng-panorama-buffered ng-panorama-index="currentSport" class="image">
       <li ng-repeat="image in sportImages" style="background-image:url({{ image }});">
         <div class="layer" ng-bind-html-unsafe="image"></div>
       </li>
@@ -154,8 +154,8 @@
     <button ng-click="currentSport = currentSport + 1" ng-disabled="currentSport == sportImages.length - 1">next</button>
 
     <h3>Our Public GitHub repos</h3>
-    This carousel has a more advanced template and DOM buffered.<br><br>
-    <ul rn-carousel rn-carousel-buffered class="repo" >
+    This panorama has a more advanced template and DOM buffered.<br><br>
+    <ul ng-panorama ng-panorama-buffered class="repo" >
       <li ng-repeat="repo in githubRepos">
           <div class="repo-name">{{ repo.name }}</div>
           {{ repo.description }}<br>
@@ -168,26 +168,25 @@
 
     <h3>Other examples</h3>
 
-<!--    <lI><a href="./demo/infinite.html">Infinite buffered carousel</a> : full screen example for mobile devices. Previous/Next slides are generated on-demand from functions or promises.</li>
+<!--    <lI><a href="./demo/infinite.html">Infinite buffered panorama</a> : full screen example for mobile devices. Previous/Next slides are generated on-demand from functions or promises.</li>
       <br>
     -->
-    <li><a href="./demo/flickr-full/index.html">Fullscreen Flickr demo (mobile)</a> : demo using Flickr API and a carousel to display Flickr groups feeds</li>
-    <li><a href="./demo/infinite.html">Infinite carousel 1</a> : using rn-carousel-prev and rn-carousel-next</li>
-    <li><a href="./demo/infinite2.html">Infinite carousel 2</a> : using rn-carousel-infinite and prev/next callbacks</li>
-    <li><a href="./demo/dynamic.html">add/remove slides dynamically</a> : using the rn-carousel-watch attribute</li>
+    <li><a href="./demo/flickr-full/index.html">Fullscreen Flickr demo (mobile)</a> : demo using Flickr API and a panorama to display Flickr groups feeds</li>
+    <li><a href="./demo/infinite.html">Infinite panorama 1</a> : using ng-panorama-prev and ng-panorama-next</li>
+    <li><a href="./demo/infinite2.html">Infinite panorama 2</a> : using ng-panorama-infinite and prev/next callbacks</li>
+    <li><a href="./demo/dynamic.html">add/remove slides dynamically</a> : using the ng-panorama-watch attribute</li>
 
 
     <br><br><br>
-    <script src="//code.angularjs.org/1.1.5/angular.js"></script>
-    <script src="./lib/angular-mobile.js"></script>
+    <script src="./bower_components/angular/angular.js"></script>
 
-    <!-- include carousel src -->
-    <script src="./dist/angular-carousel.js"></script>
-    <link href='./dist/angular-carousel.min.css' rel='stylesheet' type='text/css'>
+    <!-- include panorama src -->
+    <script src="./dist/angular-panorama.js"></script>
+    <link href='./dist/angular-panorama.min.css' rel='stylesheet' type='text/css'>
 
     <script>
     /* demo page code */
-    angular.module('myApp', ['angular-carousel'])
+    angular.module('myApp', ['angular-panorama'])
       .controller('demoController', function($scope, $http) {
         $scope.sportImages = [];
         $scope.cityImages = [];
@@ -215,7 +214,7 @@
           if (i<5) $scope.cityImages2.push('http://lorempixel.com/400/200/city/' + i + '/');
         }
 
-        // infinite carousel stuff
+        // infinite panorama stuff
         var currentDay = (new Date()),
             colors = ['#339966', '#336699', '#cc9933', '#cc6633', '#cc3366', '#66cc33'];
 
@@ -238,7 +237,7 @@
         addPage();
 
         $scope.generateSlides = function() {
-          // callback called when carousel reach the penultimate slide
+          // callback called when panorama reach the penultimate slide
           // add some slides (could be one)
           addPage();
           addPage();

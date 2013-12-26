@@ -82,7 +82,7 @@
           </span>
       </div>
 
-      <ul rn-carousel rn-carousel-buffered class="page-container" ng-class="{blurred: blurred}">
+      <ul ng-panorama ng-panorama-buffered class="page-container" ng-class="{blurred: blurred}">
         <li ng-repeat="page in pages">
           <div class="page {{ page.tpl }}">
             <div ng-repeat="item in page.images" ng-click="toggle(item)" ng-class="item.cls">
@@ -100,19 +100,19 @@
         <h2>Created by :</h2>
         <img src="./img/revolunetcom.png" alt="" title="" width="162" height="196">
         <a href="mailto:contact@revolunet.com" target="_blank" class="git">contact@revolunet.com</a>
-        <a class="git" target="_blank" href="https://github.com/revolunet/angular-carousel">Github Project</a>
+        <a class="git" target="_blank" href="https://github.com/revolunet/angular-panorama">Github Project</a>
       </div>
 
     </div>
 
-    <script src="//code.angularjs.org/1.1.5/angular.js"></script>
-    <script src="../../lib/angular-mobile.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-touch/angular-touch.js"></script>
     <script src="./lib/angular-snap.min.js"></script>
     <script src="./lib/truncate.js"></script>
     <script src="./lib/snap.js"></script>
     <script src="./lib/lazy.js"></script>
 
-    <script src="../../dist/angular-carousel.js"></script>
+    <script src="../../dist/angular-panorama.js"></script>
 
     <script src="./app.js"></script>
 

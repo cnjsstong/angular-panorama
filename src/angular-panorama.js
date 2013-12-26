@@ -1,8 +1,8 @@
 /*global angular */
 
 /*
-Angular touch carousel with CSS GPU accel and slide buffering/cycling
-http://github.com/revolunet/angular-carousel
+Angular touch panorama with CSS GPU accel and slide buffering/cycling
+http://github.com/revolunet/angular-panorama
 
 TODO : 
  - skip initial animation
@@ -12,4 +12,4 @@ TODO :
  - cycle + indicator
 */
 
-angular.module('angular-carousel', ['ngMobile']);
+angular.module('angular-panorama', ['ngTouch']);

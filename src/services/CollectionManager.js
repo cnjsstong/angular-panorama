@@ -4,7 +4,7 @@
 * - rearrange items if buffered or cycle
 * - the service is just a wrapper around a non-angular collection manager
 **/
-angular.module('angular-carousel')
+angular.module('angular-panorama')
 
 .service('CollectionManager', [function() {
 
