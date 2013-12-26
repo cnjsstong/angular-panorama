@@ -74,9 +74,10 @@ The `prev()` and `next()` function return promises containing the prev and next 
  - buffering : add intelligent indicators
 
 ## Inspirations
+ - https://github.com/revolunet/angular-carousel
  - https://github.com/ajoslin/angular-mobile-nav
  - http://mobile.smashingmagazine.com/2012/06/21/play-with-hardware-accelerated-css/
  - Thanks @ganarajpr @bennadel and angular folks for all the tips :)
 
-## Licence
+## License
 As AngularJS itself, this module is released under the permissive [MIT license](http://mit-license.org). Your contributions are always welcome.
