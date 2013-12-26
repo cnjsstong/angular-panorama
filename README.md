@@ -2,7 +2,7 @@
 
 An AngularJS panorama implementation optimised for mobile devices.
 
-Demo : http://revolunet.github.io/angular-panorama
+Demo : http://cnjsstong2.github.io/angular-panorama
 
 Comments and contributions welcome :)
 

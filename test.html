@@ -64,20 +64,23 @@
     </ul>
 
     <script src="./bower_components/angular/angular.js"></script>
-    <!-- <script src="./components/angular/angular.js"></script> -->
+    <script src="./bower_components/angular-touch/angular-touch.js"></script>
 
-    <!-- include panorama src -->
-    <script src="./dist/angular-panorama.js"></script>
-    <link href='./dist/angular-panorama.min.css' rel='stylesheet' type='text/css'>
+    <!-- include non-distributed panorama src -->
+    <script src="./src/angular-panorama.js"></script>
+    <script src="./src/directives/ng-panorama.js"></script>
+    <script src="./src/directives/ng-panorama-indicators.js"></script>
+    <script src="./src/directives/ng-panorama-infinite.js"></script>
+    <script src="./src/services/CollectionManager.js"></script>
+
+    <link href='./src/css/angular-panorama.css' rel='stylesheet' type='text/css'>
 
     <script>
     /* demo page code */
     angular.module('myApp', ['angular-panorama'])
       .controller('demoController', function($scope, $http) {
         // add some initial pages
-        $scope.pages = [{
-          id:0
-        }];
+        $scope.pages = [];
 
         $scope.prev = function(item) {
           console.log('prev', arguments);
@@ -97,13 +100,13 @@
           $scope.index = page;
         }
 
-        // var nbPages = 10;
-        // for (var i=0; i<nbPages; i++) {
-        //   $scope.pages.push({
-        //     id: i
-        //   });
-        // } 
-        // $scope.index = 3;
+        var nbPages = 10;
+        for (var i=0; i<nbPages; i++) {
+           $scope.pages.push({
+             id: i
+           });
+        }
+        $scope.index = 3;
       });
 
     </script>

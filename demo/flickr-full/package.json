@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "",
-  "author": "Julien Bouquillon - revolunet",
+  "author": "Julien Bouquillon - cnjsstong2",
   "license": "MIT",
   "devDependencies": {
     "grunt": "~0.4.1",

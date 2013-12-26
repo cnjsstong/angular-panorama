@@ -38,7 +38,7 @@
     </style>
   </head>
   <body ng-app="myApp" ng-controller='demoController'>
-    <a href="https://github.com/revolunet/angular-panorama"><img style="z-index:100;position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <a href="https://github.com/cnjsstong2/angular-panorama"><img style="z-index:100;position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 
     <div ng-panorama-infinite ng-panorama-current="page" ng-panorama-buffered ng-panorama-next="getSlide(item, 1)" ng-panorama-prev="getSlide(item, -1)" class="basic">
       <div style="background-color:{{ page.bg }};">
@@ -53,7 +53,7 @@
     </div>
 
     <script src="../bower_components/angular/angular.js"></script>
-    <!-- <script src="../components/angular/angular.js"></script> -->
+    <script src="../bower_components/angular-touch/angular-touch.js"></script>
 
     <!-- include panorama src -->
     <script src="../dist/angular-panorama.js"></script>

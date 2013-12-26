@@ -19,7 +19,6 @@ ul.ng-panorama-slides > li {
   white-space: normal;
   vertical-align:top;
   display: inline-block;
-  width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;

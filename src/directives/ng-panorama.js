@@ -31,7 +31,7 @@ angular.module('angular-panorama')
         }
         // if we use DOM nodes instead of ng-repeat, create a fake collection
         originalCollection = 'fakeArray';
-        fakeArray = Array.prototype.slice.apply(liChilds);
+        fakeArray = Array.prototype.slice.apply(liChilds);                      //liChilds.slice() in ES5
       } else {
         var exprMatch = repeatAttribute.value.match(/^\s*(.+)\s+in\s+(.*?)\s*(\s+track\s+by\s+(.+)\s*)?$/),
             originalItem = exprMatch[1],
@@ -56,6 +56,8 @@ angular.module('angular-panorama')
         /* add a wrapper div that will hide the overflow */
         var panorama = iElement.wrap("<div id='" + panoramaId +"' class='ng-panorama-container'></div>"),
             container = panorama.parent();
+
+
 
         if (fakeArray) {
           // publish the fakeArray on the scope to be able to add indicators
@@ -256,7 +258,7 @@ angular.module('angular-panorama')
           /* trigger panorama position update */
           skipAnimation = !!forceSkipAnimation || skipAnimation;
           if (containerWidth===0) updateContainerWidth();
-          offset = Math.round(scope.panoramaCollection.getRelativeIndex() * -containerWidth);
+          offset = Math.round(scope.panoramaCollection.getOffsetWithWidth(scope.panoramaCollection.getRelativeIndex())*containerWidth/100);//scope.panoramaCollection.getRelativeIndex() * -containerWidth);
           if (skipAnimation===true) {
               panorama.removeClass('ng-panorama-animate')
                   .addClass('ng-panorama-noanimate')
@@ -304,6 +306,7 @@ angular.module('angular-panorama')
               }
             }
             swiping = 0;
+            console.log(scope.panoramaCollection);
         }
         function isInsidepanorama(coords) {
           // check coords are inside the panorama area

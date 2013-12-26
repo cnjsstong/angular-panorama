@@ -9,7 +9,7 @@
 
 /*
 Angular touch panorama with CSS GPU accel and slide buffering/cycling
-http://github.com/revolunet/angular-carousel
+http://github.com/cnjsstong2/angular-panorama
 
 TODO : 
  - skip initial animation
@@ -31,7 +31,7 @@ angular.module('angular-panorama')
       items: '=',
       index: '='
     },
-    template: '<div class="rn-carousel-indicator">' +
+    template: '<div class="ng-panorama-indicator">' +
                 '<span ng-repeat="item in items" ng-class="{active: $index==$parent.index}">●</span>' +
               '</div>'
   };
@@ -45,16 +45,16 @@ angular.module('angular-panorama')
     transclude:  true,
     replace: true,
     scope: true,
-    template: '<ul rn-carousel rn-carousel-buffered><li ng-transclude></li></ul>',
+    template: '<ul ng-panorama ng-panorama-buffered><li ng-transclude></li></ul>',
     compile: function(tElement, tAttrs, linker) {
-      var repeatExpr = tAttrs.rnCarouselCurrent + ' in items';
+      var repeatExpr = tAttrs.rnpanoramaCurrent + ' in items';
       tElement.children('li').attr('ng-repeat', repeatExpr);
       return function(scope, iElement, iAttrs) {
-        // wrap the original content in a real rn-carousel
-        scope.items = [$parse(iAttrs.rnCarouselCurrent)(scope)];
-        scope.$watchCollection('carouselCollection.position', function(newValue) {
+        // wrap the original content in a real ng-panorama
+        scope.items = [$parse(iAttrs.rnpanoramaCurrent)(scope)];
+        scope.$watchCollection('panoramaCollection.position', function(newValue) {
           // assign the new item to the parent scope
-          $parse(iAttrs.rnCarouselCurrent).assign(scope.$parent, scope.items[newValue]);
+          $parse(iAttrs.rnpanoramaCurrent).assign(scope.$parent, scope.items[newValue]);
         });
       };
     }
@@ -64,19 +64,19 @@ angular.module('angular-panorama')
 angular.module('angular-panorama')
 
 .directive('ngPanorama', ['$compile', '$parse', '$swipe', '$document', '$window', 'CollectionManager', function($compile, $parse, $swipe, $document, $window, CollectionManager) {
-  /* track number of carousel instances */
-  var carousels = 0;
+  /* track number of panorama instances */
+  var panoramas = 0;
 
   return {
     restrict: 'A',
     scope: true,
     compile: function(tElement, tAttrs) {
 
-      tElement.addClass('rn-carousel-slides');
+      tElement.addClass('ng-panorama-slides');
 
       /* extract the ngRepeat expression from the first li attribute
-         this expression will be used to update the carousel
-         buffered carousels will add a slice operator to that expression
+         this expression will be used to update the panorama
+         buffered panoramas will add a slice operator to that expression
 
          if no ng-repeat found, try to use existing <li> DOM nodes
       */
@@ -90,7 +90,7 @@ angular.module('angular-panorama')
       if (!repeatAttribute) {
         var liChilds = tElement.children('li');
         if (liChilds.length < 2) {
-          throw new Error("carousel: cannot find the ngRepeat attribute OR no childNodes detected");
+          throw new Error("panorama: cannot find the ngRepeat attribute OR no childNodes detected");
         }
         // if we use DOM nodes instead of ng-repeat, create a fake collection
         originalCollection = 'fakeArray';
@@ -100,14 +100,14 @@ angular.module('angular-panorama')
             originalItem = exprMatch[1],
             trackProperty = exprMatch[3] || '';
         originalCollection = exprMatch[2];
-        isBuffered = angular.isDefined(tAttrs['rnCarouselBuffered']);
+        isBuffered = angular.isDefined(tAttrs['rnpanoramaBuffered']);
 
           /* update the current ngRepeat expression and add a slice operator */
-          repeatAttribute.value = originalItem + ' in carouselCollection.cards ' + trackProperty;
+          repeatAttribute.value = originalItem + ' in panoramaCollection.cards ' + trackProperty;
       }
       return function(scope, iElement, iAttrs, controller) {
-        carousels++;
-        var carouselId = 'rn-carousel-' + carousels,
+        panoramas++;
+        var panoramaId = 'ng-panorama-' + panoramas,
             swiping = 0,                    // swipe status
             startX = 0,                     // initial swipe
             startOffset  = 0,               // first move offset
@@ -117,8 +117,8 @@ angular.module('angular-panorama')
             skipAnimation = true;
 
         /* add a wrapper div that will hide the overflow */
-        var carousel = iElement.wrap("<div id='" + carouselId +"' class='rn-carousel-container'></div>"),
-            container = carousel.parent();
+        var panorama = iElement.wrap("<div id='" + panoramaId +"' class='ng-panorama-container'></div>"),
+            container = panorama.parent();
 
         if (fakeArray) {
           // publish the fakeArray on the scope to be able to add indicators
@@ -133,20 +133,20 @@ angular.module('angular-panorama')
 
         function transitionEndCallback(event) {
           /* when slide transition finished, update buffer */
-          if ((event.target && event.target=== carousel[0]) && (
+          if ((event.target && event.target=== panorama[0]) && (
               event.propertyName === 'transform' ||
               event.propertyName === '-webkit-transform' ||
               event.propertyName === '-moz-transform')
           ) {
             scope.$apply(function() {
               checkEdges();
-              scope.carouselCollection.adjustBuffer();
+              scope.panoramaCollection.adjustBuffer();
               updateSlidePosition(true);
             });
 
           // we should replace the 3d transform with 2d transform to prevent blurry effect on some phones (eg: GS3)
           // todo : use non-3d version for browsers not supporting it
-          carousel.css(translateSlideProperty(getTransformCoordinates(carousel[0]), true));
+          panorama.css(translateSlideProperty(getTransformCoordinates(panorama[0]), true));
 
           }
         }
@@ -155,7 +155,7 @@ angular.module('angular-panorama')
           // force apply if no apply/digest phase in progress
           function cb() {
             skipAnimation = true;
-            scope.carouselCollection[method](items, true);
+            scope.panoramaCollection[method](items, true);
           }
           if(!scope.$$phase) {
             scope.$apply(cb);
@@ -187,18 +187,18 @@ angular.module('angular-panorama')
         }
 
         function checkEdges() {
-          var position = scope.carouselCollection.position,
-              lastIndex = scope.carouselCollection.getLastIndex(),
+          var position = scope.panoramaCollection.position,
+              lastIndex = scope.panoramaCollection.getLastIndex(),
               slides=null;
-          if (position===0 && angular.isDefined(iAttrs.rnCarouselPrev)) {
-            slides = $parse(iAttrs.rnCarouselPrev)(scope, {
-              item: scope.carouselCollection.cards[0]
+          if (position===0 && angular.isDefined(iAttrs.rnpanoramaPrev)) {
+            slides = $parse(iAttrs.rnpanoramaPrev)(scope, {
+              item: scope.panoramaCollection.cards[0]
             });
             addSlides('before', slides);
           }
-          if (position===lastIndex && angular.isDefined(iAttrs.rnCarouselNext)) {
-            slides = $parse(iAttrs.rnCarouselNext)(scope, {
-              item: scope.carouselCollection.cards[scope.carouselCollection.cards.length - 1]
+          if (position===lastIndex && angular.isDefined(iAttrs.rnpanoramaNext)) {
+            slides = $parse(iAttrs.rnpanoramaNext)(scope, {
+              item: scope.panoramaCollection.cards[scope.panoramaCollection.cards.length - 1]
             });
             addSlides('after', slides);
           }
@@ -207,28 +207,28 @@ angular.module('angular-panorama')
         var collectionModel = $parse(originalCollection);
         var collectionParams = {};
 
-        /* rn-carousel-index attribute data binding */
+        /* ng-panorama-index attribute data binding */
         var initialIndex = 0;
-        if (iAttrs.rnCarouselIndex) {
-            var indexModel = $parse(iAttrs.rnCarouselIndex);
+        if (iAttrs.rnpanoramaIndex) {
+            var indexModel = $parse(iAttrs.rnpanoramaIndex);
             if (angular.isFunction(indexModel.assign)) {
               /* check if this property is assignable then watch it */
-              scope.$watch('carouselCollection.index', function(newValue) {
+              scope.$watch('panoramaCollection.index', function(newValue) {
                 indexModel.assign(scope.$parent, newValue);
               });
               initialIndex = indexModel(scope);
               scope.$parent.$watch(indexModel, function(newValue, oldValue) {
                   if (newValue!==undefined) {
-                    scope.carouselCollection.goToIndex(newValue, true);
+                    scope.panoramaCollection.goToIndex(newValue, true);
                   }
                 });
-            } else if (!isNaN(iAttrs.rnCarouselIndex)) {
+            } else if (!isNaN(iAttrs.rnpanoramaIndex)) {
               /* if user just set an initial number, set it */
-              initialIndex = parseInt(iAttrs.rnCarouselIndex, 10);
+              initialIndex = parseInt(iAttrs.rnpanoramaIndex, 10);
             }
         }
 
-        if (angular.isDefined(iAttrs.rnCarouselCycle)) {
+        if (angular.isDefined(iAttrs.rnpanoramaCycle)) {
           collectionParams.cycle = true;
         }
         collectionParams.index = initialIndex;
@@ -239,9 +239,9 @@ angular.module('angular-panorama')
         }
 
         // initialise the collection
-        scope.carouselCollection = CollectionManager.create(collectionParams);
+        scope.panoramaCollection = CollectionManager.create(collectionParams);
 
-        scope.$watch('carouselCollection.updated', function(newValue, oldValue) {
+        scope.$watch('panoramaCollection.updated', function(newValue, oldValue) {
           if (newValue) updateSlidePosition();
         });
 
@@ -249,16 +249,16 @@ angular.module('angular-panorama')
         scope.$watch(collectionModel, function(newValue, oldValue) {
           // update whole collection contents
           // reinitialise index
-          scope.carouselCollection.setItems(newValue, collectionReady);
+          scope.panoramaCollection.setItems(newValue, collectionReady);
           collectionReady = true;
           if (containerWidth===0) updateContainerWidth();
           updateSlidePosition();
         });
 
-        if (angular.isDefined(iAttrs.rnCarouselWatch)) {
+        if (angular.isDefined(iAttrs.rnpanoramaWatch)) {
           scope.$watch(originalCollection, function(newValue, oldValue) {
             // partial collection update, watch deeply so use carefully
-            scope.carouselCollection.setItems(newValue, false);
+            scope.panoramaCollection.setItems(newValue, false);
             collectionReady = true;
             if (containerWidth===0) updateContainerWidth();
             updateSlidePosition();
@@ -283,8 +283,8 @@ angular.module('angular-panorama')
           }
         }
 
-        carousel[0].addEventListener('webkitTransitionEnd', transitionEndCallback, false);  // webkit
-        carousel[0].addEventListener('transitionend', transitionEndCallback, false);        // mozilla
+        panorama[0].addEventListener('webkitTransitionEnd', transitionEndCallback, false);  // webkit
+        panorama[0].addEventListener('transitionend', transitionEndCallback, false);        // mozilla
 
         // when orientation change, force width re-redetection
         window.addEventListener('orientationchange', resize);
@@ -299,9 +299,9 @@ angular.module('angular-panorama')
         function updateContainerWidth() {
             container.css('width', 'auto');
             skipAnimation = true;
-            var slides = carousel.children('li');
+            var slides = panorama.children('li');
             if (slides.length === 0) {
-              containerWidth = carousel[0].getBoundingClientRect().width;
+              containerWidth = panorama[0].getBoundingClientRect().width;
             } else {
               containerWidth = slides[0].getBoundingClientRect().width;
             }
@@ -309,24 +309,24 @@ angular.module('angular-panorama')
             return containerWidth;
         }
 
-        /* enable carousel indicator */
-        if (angular.isDefined(iAttrs.rnCarouselIndicator)) {
-          var indicator = $compile("<div id='" + carouselId +"-indicator' index='carouselCollection.index' items='carouselCollection.items' data-rn-carousel-indicators class='rn-carousel-indicator'></div>")(scope);
+        /* enable panorama indicator */
+        if (angular.isDefined(iAttrs.rnpanoramaIndicator)) {
+          var indicator = $compile("<div id='" + panoramaId +"-indicator' index='panoramaCollection.index' items='panoramaCollection.items' data-ng-panorama-indicators class='ng-panorama-indicator'></div>")(scope);
           container.append(indicator);
         }
 
         function updateSlidePosition(forceSkipAnimation) {
-          /* trigger carousel position update */
+          /* trigger panorama position update */
           skipAnimation = !!forceSkipAnimation || skipAnimation;
           if (containerWidth===0) updateContainerWidth();
-          offset = Math.round(scope.carouselCollection.getRelativeIndex() * -containerWidth);
+          offset = Math.round(scope.panoramaCollection.getRelativeIndex() * -containerWidth);
           if (skipAnimation===true) {
-              carousel.removeClass('rn-carousel-animate')
-                  .addClass('rn-carousel-noanimate')
+              panorama.removeClass('ng-panorama-animate')
+                  .addClass('ng-panorama-noanimate')
                   .css(translateSlideProperty(offset, false));
           } else {
-              carousel.removeClass('rn-carousel-noanimate')
-                  .addClass('rn-carousel-animate')
+              panorama.removeClass('ng-panorama-noanimate')
+                  .addClass('ng-panorama-animate')
                   .css(translateSlideProperty(offset, true));
           }
           skipAnimation = false;
@@ -339,8 +339,8 @@ angular.module('angular-panorama')
             $document.unbind('mouseup', documentMouseUpEvent);
             if (containerWidth===0) updateContainerWidth();
             if (swiping > 1) {
-              var lastIndex = scope.carouselCollection.getLastIndex(),
-                  position = scope.carouselCollection.position,
+              var lastIndex = scope.panoramaCollection.getLastIndex(),
+                  position = scope.panoramaCollection.position,
                   slideOffset = (offset < startOffset)?1:-1,
                   tmpSlideIndex = Math.min(Math.max(0, position + slideOffset), lastIndex);
               var delta = coords.x - startX;
@@ -357,26 +357,26 @@ angular.module('angular-panorama')
                 });
               } else {
                 scope.$apply(function() {
-                  if (angular.isDefined(iAttrs.rnCarouselCycle)) {
-                    // force slide move even if invalid position for cycle carousels
-                    scope.carouselCollection.position = tmpSlideIndex;
+                  if (angular.isDefined(iAttrs.rnpanoramaCycle)) {
+                    // force slide move even if invalid position for cycle panoramas
+                    scope.panoramaCollection.position = tmpSlideIndex;
                     updateSlidePosition();
                   }
-                  scope.carouselCollection.goTo(tmpSlideIndex, true);
+                  scope.panoramaCollection.goTo(tmpSlideIndex, true);
                 });
               }
             }
             swiping = 0;
         }
-        function isInsideCarousel(coords) {
-          // check coords are inside the carousel area
+        function isInsidepanorama(coords) {
+          // check coords are inside the panorama area
           // we always compute the container dimensions in case user have scrolled the page
           var containerRect = container[0].getBoundingClientRect();
 
           var isInside = (coords.x > containerRect.left && coords.x < (containerRect.left + containerWidth) &&
                   (coords.y > containerRect.top && coords.y < containerRect.top + containerRect.height));
 
-          // console.log('isInsideCarousel', {
+          // console.log('isInsidepanorama', {
           //   containerLeft: containerRect.left,
           //   containerTop: containerRect.top,
           //   containerHeight: containerRect.height,
@@ -397,7 +397,7 @@ angular.module('angular-panorama')
             // todo: requestAnimationFrame instead
             moveDelay = ($window.jasmine || $window.navigator.platform=='iPad')?0:50;
 
-        $swipe.bind(carousel, {
+        $swipe.bind(panorama, {
           /* use angular $swipe service */
           start: function(coords) {
            // console.log('$swipe start');
@@ -410,7 +410,7 @@ angular.module('angular-panorama')
           },
           move: function (coords) {
             // cancel movement if not inside
-            if (!isInsideCarousel(coords)) {
+            if (!isInsidepanorama(coords)) {
              // console.log('force end');
               swipeEnd(coords);
               return;
@@ -426,17 +426,17 @@ angular.module('angular-panorama')
               var now = (new Date()).getTime();
               if (lastMove && (now-lastMove) < moveDelay) return;
               lastMove = now;
-              var lastIndex = scope.carouselCollection.getLastIndex(),
-                  position = scope.carouselCollection.position;
+              var lastIndex = scope.panoramaCollection.getLastIndex(),
+                  position = scope.panoramaCollection.position;
               /* ratio is used for the 'rubber band' effect */
               var ratio = 1;
               if ((position === 0 && coords.x > startX) || (position === lastIndex && coords.x < startX))
                 ratio = 3;
               /* follow cursor movement */
               offset = startOffset + deltaX / ratio;
-              carousel.css(translateSlideProperty(offset, true))
-                      .removeClass('rn-carousel-animate')
-                      .addClass('rn-carousel-noanimate');
+              panorama.css(translateSlideProperty(offset, true))
+                      .removeClass('ng-panorama-animate')
+                      .addClass('ng-panorama-noanimate');
             }
           },
           end: function (coords) {
