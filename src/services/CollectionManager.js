@@ -196,9 +196,7 @@ angular.module('angular-panorama')
             this.unshift(this.items.pop());
         };
         CollectionManager.prototype.getOffsetWithWidth = function (index) {
-            if (typeof this.cards[0].width == 'undefined') {
-                return -index;
-            } else {
+            if (this.items[0].width) {
                 var sum = 0;
                 var newPosition=this.index;
                 if (newPosition == 0) return 0;
@@ -214,8 +212,9 @@ angular.module('angular-panorama')
                 console.log(this.index);
                 console.log(newPosition);
                 return -sum;
+            } else {
+                return -index;
             }
-
         }
         return {
             create: function (options) {

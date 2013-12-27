@@ -1,6 +1,6 @@
 /**
  * Angular Panorama - Mimic Windows Phone's Panorama UI control.
- * @version v0.1.0 - 2013-12-26
+ * @version v0.1.0 - 2013-12-27
  * @link http://cnjsstong2.github.com/angular-panorama
  * @author Tong Shen <tshen@farseerinc.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -662,23 +662,25 @@ angular.module('angular-panorama')
             this.unshift(this.items.pop());
         };
         CollectionManager.prototype.getOffsetWithWidth = function (index) {
-            if (typeof this.items[0].width == 'undefined') {
-                return -index;
-            } else {
+            if (this.items[0].width) {
                 var sum = 0;
-                if (index == 0) return 0;
-                for (var i in this.items.slice(0, index)) {
-                    sum += this.items[i].width;
+                var newPosition=this.index;
+                if (newPosition == 0) return 0;
+                for (var i in this.cards.slice(0, index)) {
+                    sum += this.cards[i].width;
                 }
-                if (index < this.items.length - 1) {
-                    sum -= (100 - this.items[index].width) / 2;
+                if (newPosition < this.items.length - 1) {
+                    sum -= (100 - this.cards[index].width) / 2;
                 } else {
-                    sum -= (100 - this.items[index].width);
+                    sum -= (100 - this.cards[index].width);
                 }
-                console.log(sum);
+                console.log(index);
+                console.log(this.index);
+                console.log(newPosition);
                 return -sum;
+            } else {
+                return -index;
             }
-
         }
         return {
             create: function (options) {
