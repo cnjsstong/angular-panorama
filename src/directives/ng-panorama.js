@@ -262,14 +262,16 @@ angular.module('angular-panorama')
                         container.css('width', containerWidth + 'px');
                         return containerWidth;
                     }
-
                     if(angular.isDefined(iAttrs.ngPanoramaBackgroundImage)) {
                         container.css('background-image', 'url('+iAttrs.ngPanoramaBackgroundImage+')');
                         container.css('background-position','0% 50%');
-//                        container.css('background-repeat', 'no-repeat');
-//                        container.css('background-attachment', 'fixed');
-//                        container.css('background-position', '0% 50%');
                     }
+                    scope.$watch('iAttrs.ngPanoramaBackgroundImage', function(newValue){
+                        if(newValue) {
+                            container.css('background-image', 'url('+newValue+')');
+                            container.css('background-position','0% 50%');
+                        }
+                    });
 
                     /* enable panorama indicator */
                     if (angular.isDefined(iAttrs.ngPanoramaIndicator)) {
