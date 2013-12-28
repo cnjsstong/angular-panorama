@@ -31,6 +31,7 @@ angular.module('angular-panorama')
                     fakeArray;
                 console.log(repeater);
                 console.log(repeatAttribute);
+
                 if (!repeatAttribute) repeatAttribute = liAttributes['data-ng-repeat'];
                 if (!repeatAttribute) repeatAttribute = liAttributes['x-ng-repeat'];
                 if (!repeatAttribute) {
@@ -48,7 +49,7 @@ angular.module('angular-panorama')
                         originalItem = exprMatch[1],
                         trackProperty = exprMatch[3] || '';
                     originalCollection = exprMatch[2];
-                    isBuffered = angular.isDefined(tAttrs['rnpanoramaBuffered']);
+                    isBuffered = angular.isDefined(tAttrs['ngPanoramaBuffered']);
 
                     /* update the current ngRepeat expression and add a slice operator */
                     repeatAttribute.value = originalItem + ' in panoramaCollection.cards ' + trackProperty;
@@ -140,14 +141,14 @@ angular.module('angular-panorama')
                         var position = scope.panoramaCollection.position,
                             lastIndex = scope.panoramaCollection.getLastIndex(),
                             slides = null;
-                        if (position === 0 && angular.isDefined(iAttrs.rnpanoramaPrev)) {
-                            slides = $parse(iAttrs.rnpanoramaPrev)(scope, {
+                        if (position === 0 && angular.isDefined(iAttrs.ngPanoramaPrev)) {
+                            slides = $parse(iAttrs.ngPanoramaPrev)(scope, {
                                 item: scope.panoramaCollection.cards[0]
                             });
                             addSlides('before', slides);
                         }
-                        if (position === lastIndex && angular.isDefined(iAttrs.rnpanoramaNext)) {
-                            slides = $parse(iAttrs.rnpanoramaNext)(scope, {
+                        if (position === lastIndex && angular.isDefined(iAttrs.ngPanoramaNext)) {
+                            slides = $parse(iAttrs.ngPanoramaNext)(scope, {
                                 item: scope.panoramaCollection.cards[scope.panoramaCollection.cards.length - 1]
                             });
                             addSlides('after', slides);
@@ -160,8 +161,8 @@ angular.module('angular-panorama')
 
                     /* ng-panorama-index attribute data binding */
                     var initialIndex = 0;
-                    if (iAttrs.rnpanoramaIndex) {
-                        var indexModel = $parse(iAttrs.rnpanoramaIndex);
+                    if (iAttrs.ngPanoramaIndex) {
+                        var indexModel = $parse(iAttrs.ngPanoramaIndex);
                         if (angular.isFunction(indexModel.assign)) {
                             /* check if this property is assignable then watch it */
                             scope.$watch('panoramaCollection.index', function (newValue) {
@@ -173,13 +174,13 @@ angular.module('angular-panorama')
                                     scope.panoramaCollection.goToIndex(newValue, true);
                                 }
                             });
-                        } else if (!isNaN(iAttrs.rnpanoramaIndex)) {
+                        } else if (!isNaN(iAttrs.ngPanoramaIndex)) {
                             /* if user just set an initial number, set it */
-                            initialIndex = parseInt(iAttrs.rnpanoramaIndex, 10);
+                            initialIndex = parseInt(iAttrs.ngPanoramaIndex, 10);
                         }
                     }
 
-                    if (angular.isDefined(iAttrs.rnpanoramaCycle)) {
+                    if (angular.isDefined(iAttrs.ngPanoramaCycle)) {
                         collectionParams.cycle = true;
                     }
                     collectionParams.index = initialIndex;
@@ -206,7 +207,7 @@ angular.module('angular-panorama')
                         updateSlidePosition();
                     });
 
-                    if (angular.isDefined(iAttrs.rnpanoramaWatch)) {
+                    if (angular.isDefined(iAttrs.ngPanoramaWatch)) {
                         scope.$watch(originalCollection, function (newValue, oldValue) {
                             // partial collection update, watch deeply so use carefully
                             scope.panoramaCollection.setItems(newValue, false);
@@ -262,8 +263,16 @@ angular.module('angular-panorama')
                         return containerWidth;
                     }
 
+                    if(angular.isDefined(iAttrs.ngPanoramaBackgroundImage)) {
+                        container.css('background-image', 'url('+iAttrs.ngPanoramaBackgroundImage+')');
+                        container.css('background-position','0% 50%');
+//                        container.css('background-repeat', 'no-repeat');
+//                        container.css('background-attachment', 'fixed');
+//                        container.css('background-position', '0% 50%');
+                    }
+
                     /* enable panorama indicator */
-                    if (angular.isDefined(iAttrs.rnpanoramaIndicator)) {
+                    if (angular.isDefined(iAttrs.ngPanoramaIndicator)) {
                         var indicator = $compile("<div id='" + panoramaId + "-indicator' index='panoramaCollection.index' items='panoramaCollection.items' data-ng-panorama-indicators class='ng-panorama-indicator'></div>")(scope);
                         container.append(indicator);
                     }
@@ -310,17 +319,21 @@ angular.module('angular-panorama')
                                 });
                             } else {
                                 scope.$apply(function () {
-                                    if (angular.isDefined(iAttrs.rnpanoramaCycle)) {
+                                    if (angular.isDefined(iAttrs.ngPanoramaCycle)) {
                                         // force slide move even if invalid position for cycle panoramas
                                         scope.panoramaCollection.position = tmpSlideIndex;
                                         updateSlidePosition();
                                     }
+                                    console.log(tmpSlideIndex);
+                                    console.log(lastIndex);
+                                    var per=tmpSlideIndex / lastIndex * 100;
+                                    container.css('background-position',per+'% 50%');
                                     scope.panoramaCollection.goTo(tmpSlideIndex, true);
                                 });
                             }
                         }
                         swiping = 0;
-                        console.log(scope.panoramaCollection);
+                        //console.log(scope.panoramaCollection);
                     }
 
                     function isInsidepanorama(coords) {
@@ -394,6 +407,7 @@ angular.module('angular-panorama')
                                 panorama.css(translateSlideProperty(offset, true))
                                     .removeClass('ng-panorama-animate')
                                     .addClass('ng-panorama-noanimate');
+
                             }
                         },
                         end: function (coords) {

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="../bower_components/jquery/jquery.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=620, user-scalable=no">
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -58,8 +59,8 @@
 <div class="dynamicdemo">
     <button ng-click="prepend()">prepend</button>
     <button ng-click="append()">append</button>
-    <ul ng-panorama ng-panorama-index="index" ng-panorama-watch ng-panorama-buffered class="basic">
-        <li ng-repeat="page in pages" style="background-color:{{ page.bg }}; width: {{page.width}}%;">
+    <ul ng-panorama ng-panorama-index="index" ng-panorama-watch ng-panorama-buffered class="basic" ng-panorama-background-image="http://farseer-img.s3.amazonaws.com/img/background/5269b654e4b08d36f2797424">
+        <li ng-repeat="page in pages" style="width: {{page.width}}%;">
             Infinite angular-panorama demo<br><br>
 
             <h3 ng-bind="page.id"></h3>
@@ -72,7 +73,7 @@
     </ul>
 </div>
 
-<!--<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>-->
+
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../bower_components/angular-touch/angular-touch.js"></script>
 
