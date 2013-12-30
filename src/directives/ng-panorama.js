@@ -266,10 +266,14 @@ angular.module('angular-panorama')
                         container.css('background-image', 'url('+iAttrs.ngPanoramaBackgroundImage+')');
                         container.css('background-position','0% 50%');
                     }
-                    scope.$watch('iAttrs.ngPanoramaBackgroundImage', function(newValue){
+                    iAttrs.$observe('ngPanoramaBackgroundImage', function(newValue, oldValue){
+                        console.log(scope);
+                        console.log(oldValue);
+                        console.log(newValue);
                         if(newValue) {
+                            console.log('changing..');
                             container.css('background-image', 'url('+newValue+')');
-                            container.css('background-position','0% 50%');
+                            container.css('background-position',scope.panoramaCollection.position/scope.panoramaCollection.lastIndex*100+'% 50%');
                         }
                     });
 

@@ -6,6 +6,7 @@ must be ul/li
     overflow: hidden;
     background: no-repeat fixed;
     transition: background-position 0.1s linear;
+    background-size: auto 100%;
 }
 
 ul.ng-panorama-slides {
