@@ -4,8 +4,7 @@ must be ul/li
 */
 .ng-panorama-container {
     overflow: hidden;
-    background: no-repeat fixed;
-    transition: background-position 0.1s linear;
+    transition: background-position 0.2s linear;
     background-size: auto 100%;
 }
 
