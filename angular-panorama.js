@@ -1,6 +1,6 @@
 /**
  * Angular Panorama - Mimic Windows Phone's Panorama UI control.
- * @version v0.1.2 - 2013-12-30
+ * @version v0.1.2 - 2014-01-01
  * @link http://cnjsstong2.github.com/angular-panorama
  * @author Tong Shen <tshen@farseerinc.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
