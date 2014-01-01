@@ -4,7 +4,7 @@ must be ul/li
 */
 .ng-panorama-container {
     overflow: hidden;
-    transition: background-position 0.2s linear;
+    transition: background-position 0.2s ease-in-out;
     background-size: auto 100%;
 }
 
@@ -31,9 +31,9 @@ ul.ng-panorama-slides > li {
 }
 
 .ng-panorama-animate {
-    -webkit-transition: -webkit-transform .1s ease-out;
-    -moz-transition: -moz-transform .1s ease-out;
-    transition: transform .1s ease-out;
+    -webkit-transition: -webkit-transform .1s ease-in-out;
+    -moz-transition: -moz-transform .1s ease-in-out;
+    transition: transform .1s ease-in-out;
 }
 
 .ng-panorama-noanimate {
