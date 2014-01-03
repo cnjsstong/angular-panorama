@@ -2,13 +2,13 @@
     "author": "cnjsstong",
     "name": "angular-panorama",
     "description": "Mimic Windows Phone's panorama UI control.",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "homepage": "https://github.com/cnjsstong2/angular-panorama",
     "repository": {
         "type": "git",
         "url": "git://github.com/cnjsstong2/angular-panorama.git"
     },
-    "main": "./dist/angular-panorama.js",
+    "main": "./angular-panorama.js",
     "dependencies": {
         "angular": ">= 1.2.0",
         "jquery": ">= 1.9.0",
