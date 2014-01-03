@@ -317,7 +317,10 @@ angular.module('angular-panorama')
                             containerWidth = slides[0].getBoundingClientRect().width;
                         }
 //                        console.log(scope.panoramaCollection.cards[0].width);
-                        var res=containerWidth * 100 / scope.panoramaCollection.cards[0].width;
+                        var res=containerWidth;
+                        if(scope.panoramaCollection.cards[0] && scope.panoramaCollection.cards[0].width) {
+                            res=res * 100 / scope.panoramaCollection.cards[0].width
+                        }
 //                        console.log(containerWidth);
 //                        console.log(res);
                         container.css('width', res + 'px');
