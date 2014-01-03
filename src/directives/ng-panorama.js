@@ -29,8 +29,8 @@ angular.module('angular-panorama')
                     isBuffered = false,
                     originalCollection,
                     fakeArray;
-                console.log(repeater);
-                console.log(repeatAttribute);
+//                console.log(repeater);
+//                console.log(repeatAttribute);
 
                 if (!repeatAttribute) repeatAttribute = liAttributes['data-ng-repeat'];
                 if (!repeatAttribute) repeatAttribute = liAttributes['x-ng-repeat'];
@@ -42,8 +42,8 @@ angular.module('angular-panorama')
                     // if we use DOM nodes instead of ng-repeat, create a fake collection
                     originalCollection = 'fakeArray';
                     fakeArray = Array.prototype.slice.apply(liChilds);                      // Converting liChilds from object to array. liChilds.slice() in ES5
-                    console.log('fakeArray');
-                    console.log(fakeArray);
+//                    console.log('fakeArray');
+//                    console.log(fakeArray);
                 } else {
                     var exprMatch = repeatAttribute.value.match(/^\s*(.+)\s+in\s+(.*?)\s*(\s+track\s+by\s+(.+)\s*)?$/),
                         originalItem = exprMatch[1],
@@ -259,19 +259,23 @@ angular.module('angular-panorama')
                         } else {
                             containerWidth = slides[0].getBoundingClientRect().width;
                         }
-                        container.css('width', containerWidth + 'px');
-                        return containerWidth;
+//                        console.log(scope.panoramaCollection.cards[0].width);
+                        var res=containerWidth * 100 / scope.panoramaCollection.cards[0].width;
+//                        console.log(containerWidth);
+//                        console.log(res);
+                        container.css('width', res + 'px');
+                        return res;
                     }
                     if(angular.isDefined(iAttrs.ngPanoramaBackgroundImage)) {
                         container.css('background-image', 'url('+iAttrs.ngPanoramaBackgroundImage+')');
                         container.css('background-position','0% 50%');
                     }
                     iAttrs.$observe('ngPanoramaBackgroundImage', function(newValue, oldValue){
-                        console.log(scope);
-                        console.log(oldValue);
-                        console.log(newValue);
+//                        console.log(scope);
+//                        console.log(oldValue);
+//                        console.log(newValue);
                         if(newValue) {
-                            console.log('changing..');
+//                            console.log('changing..');
                             container.css('background-image', 'url('+newValue+')');
                             container.css('background-position',scope.panoramaCollection.position/scope.panoramaCollection.lastIndex*100+'% 50%');
                         }
@@ -330,8 +334,8 @@ angular.module('angular-panorama')
                                         scope.panoramaCollection.position = tmpSlideIndex;
                                         updateSlidePosition();
                                     }
-                                    console.log(tmpSlideIndex);
-                                    console.log(lastIndex);
+//                                    console.log(tmpSlideIndex);
+//                                    console.log(lastIndex);
                                     var per=tmpSlideIndex / lastIndex * 100;
                                     container.css('background-position',per+'% 50%');
                                     scope.panoramaCollection.goTo(tmpSlideIndex, true);
