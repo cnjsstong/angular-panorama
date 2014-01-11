@@ -74,7 +74,7 @@ angular.module('angular-panorama')
                     function updateContainerHeight() {
                         var minHeight=$window.innerHeight;
                         if(iAttrs.minHeightOffset) {
-                            minHeight+=iAttrs.minHeightOffset;
+                            minHeight+=parseInt(iAttrs.minHeightOffset);
                         }
                         container.css('min-height',minHeight+'px');
                     }
