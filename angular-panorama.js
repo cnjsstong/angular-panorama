@@ -1,6 +1,6 @@
 /**
  * Angular Panorama - Mimic Windows Phone's Panorama UI control.
- * @version v0.1.3 - 2014-01-03
+ * @version v0.1.3 - 2014-01-11
  * @link http://cnjsstong2.github.com/angular-panorama
  * @author Tong Shen <tshen@farseerinc.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -305,6 +305,11 @@ angular.module('angular-panorama')
                     function resize() {
                         updateContainerWidth();
                         updateSlidePosition();
+                        var minHeight=$window.innerHeight;
+                        if(iAttrs.minHeightOffset) {
+                            minHeight+=iAttrs.minHeightOffset;
+                        }
+                        container.css('min-height',minHeight+'px');
                     }
 
                     function updateContainerWidth() {

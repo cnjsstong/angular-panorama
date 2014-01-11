@@ -248,6 +248,11 @@ angular.module('angular-panorama')
                     function resize() {
                         updateContainerWidth();
                         updateSlidePosition();
+                        var minHeight=$window.innerHeight;
+                        if(iAttrs.minHeightOffset) {
+                            minHeight+=iAttrs.minHeightOffset;
+                        }
+                        container.css('min-height',minHeight+'px');
                     }
 
                     function updateContainerWidth() {
