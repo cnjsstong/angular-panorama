@@ -1,7 +1,7 @@
 {
   "name": "angular-panorama",
   "description": "Angular Panorama - Mimic Windows Phone's Panorama UI control.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "http://cnjsstong2.github.com/angular-panorama",
   "author": "Tong Shen <tshen@farseerinc.com>",
   "repository": {
