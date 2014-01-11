@@ -126,6 +126,15 @@ angular.module('angular-panorama')
                     var panorama = iElement.wrap("<div id='" + panoramaId + "' class='ng-panorama-container'></div>"),
                         container = panorama.parent();
 
+                    updateContainerHeight();
+
+                    function updateContainerHeight() {
+                        var minHeight=$window.innerHeight;
+                        if(iAttrs.minHeightOffset) {
+                            minHeight+=iAttrs.minHeightOffset;
+                        }
+                        container.css('min-height',minHeight+'px');
+                    }
 
                     if (fakeArray) {
                         // publish the fakeArray on the scope to be able to add indicators
@@ -305,11 +314,7 @@ angular.module('angular-panorama')
                     function resize() {
                         updateContainerWidth();
                         updateSlidePosition();
-                        var minHeight=$window.innerHeight;
-                        if(iAttrs.minHeightOffset) {
-                            minHeight+=iAttrs.minHeightOffset;
-                        }
-                        container.css('min-height',minHeight+'px');
+                        updateContainerHeight();
                     }
 
                     function updateContainerWidth() {
