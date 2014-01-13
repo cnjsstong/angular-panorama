@@ -8,7 +8,7 @@
         "type": "git",
         "url": "git://github.com/cnjsstong2/angular-panorama.git"
     },
-    "main": "./angular-panorama.js",
+    "main": ["angular-panorama.js","angular-panorama.min.css"],
     "dependencies": {
         "angular": ">= 1.2.0",
         "angular-touch": "~1.2.6"
