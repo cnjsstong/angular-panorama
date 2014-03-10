@@ -1,6 +1,6 @@
 /**
  * Angular Panorama - Mimic Windows Phone's Panorama UI control.
- * @version v0.1.4 - 2014-01-13
+ * @version v0.1.5 - 2014-03-10
  * @link http://cnjsstong2.github.com/angular-panorama
  * @author Tong Shen <tshen@farseerinc.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -17,44 +17,94 @@ angular.module('angular-panorama', ['ngTouch']);
 
 angular.module('angular-panorama')
 
-.directive('ngPanoramaIndicators', [function() {
-  return {
-    restrict: 'A',
-    replace: true,
-    scope: {
-      items: '=',
-      index: '='
-    },
-    template: '<div class="ng-panorama-indicator">' +
-                '<span ng-repeat="item in items" ng-class="{active: $index==$parent.index}">●</span>' +
-              '</div>'
-  };
-}]);
+    .directive('ngPanoramaNative', ['$swipe', '$document', '$window', function ($swipe, $document, $window) {
+        return {
+            restrict: 'A',
+            scope: {
+                pages: "=ngPanoramaNative",
+                curIndex: "=ngPanoramaIndex",
+                backgroundImage: "=ngPanoramaBackgroundImage"
+            },
+            link: function (scope, el, attr) {
+                scope.$watch('backgroundImage', function (newValue) {
+                    el.css('background-image', 'url(' + newValue + ')');
+                });
+                console.log(el);
+                el.addClass('ng-panorama-container');
+                var ul = el.find('ul');
+                ul.addClass('ng-panorama-slides');
+                if (!scope.index) {
+                    scope.index = 0;
+                }
+                function getOffsetByIndex(index) {
+                    var offset = 0;
+                    var containerWidth = el.prop('offsetWidth');
+                    for (var i = 0; i < index; i++) {
+                        offset -= (scope.pages[i].width || 100) * containerWidth / 100;
+                    }
+                    if (index > 0) {
+                        var fine = (100 - scope.pages[index].width) / 2 * containerWidth / 100;
+                        offset += fine;
+                        if (index == scope.pages.length - 1) {
+                            offset += fine;
+                        }
+                    }
+                    console.log(offset);
+                    return offset;
+                }
 
-angular.module('angular-panorama')
+                function setOffset(offset) {
+                    ul.css('-webkit-transform', 'translate3d(' + offset + 'px, 0, 0)');
+                }
 
-.directive('ngPanoramaInfinite', ['$parse', '$compile', function($parse, $compile) {
-  return {
-    restrict: 'EA',
-    transclude:  true,
-    replace: true,
-    scope: true,
-    template: '<ul ng-panorama ng-panorama-buffered><li ng-transclude></li></ul>',
-    compile: function(tElement, tAttrs, linker) {
-      var repeatExpr = tAttrs.ngPanoramaCurrent + ' in items';
-      tElement.children('li').attr('ng-repeat', repeatExpr);
-      return function(scope, iElement, iAttrs) {
-        // wrap the original content in a real ng-panorama
-        scope.items = [$parse(iAttrs.ngPanoramaCurrent)(scope)];
-        scope.$watchCollection('panoramaCollection.position', function(newValue) {
-          // assign the new item to the parent scope
-          $parse(iAttrs.ngPanoramaCurrent).assign(scope.$parent, scope.items[newValue]);
-        });
-      };
-    }
-  };
-}]);
+                var startCoords, startOffset;
 
+                var cruiseOn = {'transition': 'all 0.2s ease-in'};
+                var cruiseOff = {'transition': 'none'};
+//
+//                ul[0].addEventListener('webkitTransitionEnd', function() {
+//                    ul.css('transition','none');
+//                });
+
+                $swipe.bind(el, {
+                    start: function (coords) {
+                        console.log('start: ', coords);
+                        startCoords = coords;
+                        startOffset = getOffsetByIndex(scope.index);
+                        ul.css(cruiseOff);
+//                        ul.css('transition','none');
+                    },
+                    move: function (coords) {
+//                        console.log('move: ', coords);
+                        setOffset(startOffset + coords.x - startCoords.x);
+                    },
+                    end: function (coords) {
+                        console.log('end: ', coords);
+                        var targetIndex = scope.index;
+                        var threshold = el.prop('offsetWidth') * 0.12;
+                        var delta = coords.x - startCoords.x;
+                        console.log(delta, threshold);
+                        if (delta > threshold && targetIndex >= 0) {
+                            targetIndex--;
+                        } else if (delta < -threshold && targetIndex < scope.pages.length - 1) {
+                            targetIndex++;
+                        }
+                        console.log(scope.index, targetIndex);
+                        scope.index = targetIndex;
+                        ul.css(cruiseOn);
+//                        ul.css('transition','all 0.2s linear');
+                        setOffset(getOffsetByIndex(scope.index));
+                    },
+                    cancel: function (coords) {
+                        console.log('cancel: ', coords);
+                        ul.css(cruiseOn);
+//                        ul.css('transition','all 0.2s linear');
+                        setOffset(getOffsetByIndex(scope.index));
+                    }
+                })
+            }
+        }
+    }]);
 angular.module('angular-panorama')
 
     .directive('ngPanorama', ['$compile', '$parse', '$swipe', '$document', '$window', 'CollectionManager', function ($compile, $parse, $swipe, $document, $window, CollectionManager) {
