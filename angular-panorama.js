@@ -1,6 +1,6 @@
 /**
  * Angular Panorama - Mimic Windows Phone's Panorama UI control.
- * @version v0.1.5 - 2014-03-10
+ * @version v0.1.5 - 2014-03-11
  * @link http://cnjsstong2.github.com/angular-panorama
  * @author Tong Shen <tshen@farseerinc.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -90,7 +90,9 @@ angular.module('angular-panorama')
                             targetIndex++;
                         }
                         console.log(scope.index, targetIndex);
-                        scope.index = targetIndex;
+                        scope.$apply(function() {
+                            scope.index = targetIndex;
+                        });
                         ul.css(cruiseOn);
 //                        ul.css('transition','all 0.2s linear');
                         setOffset(getOffsetByIndex(scope.index));
