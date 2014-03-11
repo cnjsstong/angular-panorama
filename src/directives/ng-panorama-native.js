@@ -16,8 +16,8 @@ angular.module('angular-panorama')
                 el.addClass('ng-panorama-container');
                 var ul = el.find('ul');
                 ul.addClass('ng-panorama-slides');
-                if (!scope.index) {
-                    scope.index = 0;
+                if (!scope.curIndex) {
+                    scope.curIndex = 0;
                 }
                 function getOffsetByIndex(index) {
                     var offset = 0;
@@ -53,7 +53,7 @@ angular.module('angular-panorama')
                     start: function (coords) {
                         console.log('start: ', coords);
                         startCoords = coords;
-                        startOffset = getOffsetByIndex(scope.index);
+                        startOffset = getOffsetByIndex(scope.curIndex);
                         ul.css(cruiseOff);
 //                        ul.css('transition','none');
                     },
@@ -63,7 +63,7 @@ angular.module('angular-panorama')
                     },
                     end: function (coords) {
                         console.log('end: ', coords);
-                        var targetIndex = scope.index;
+                        var targetIndex = scope.curIndex;
                         var threshold = el.prop('offsetWidth') * 0.12;
                         var delta = coords.x - startCoords.x;
                         console.log(delta, threshold);
@@ -72,19 +72,19 @@ angular.module('angular-panorama')
                         } else if (delta < -threshold && targetIndex < scope.pages.length - 1) {
                             targetIndex++;
                         }
-                        console.log(scope.index, targetIndex);
+                        console.log(scope.curIndex, targetIndex);
                         scope.$apply(function() {
-                            scope.index = targetIndex;
+                            scope.curIndex = targetIndex;
                         });
                         ul.css(cruiseOn);
 //                        ul.css('transition','all 0.2s linear');
-                        setOffset(getOffsetByIndex(scope.index));
+                        setOffset(getOffsetByIndex(scope.curIndex));
                     },
                     cancel: function (coords) {
                         console.log('cancel: ', coords);
                         ul.css(cruiseOn);
 //                        ul.css('transition','all 0.2s linear');
-                        setOffset(getOffsetByIndex(scope.index));
+                        setOffset(getOffsetByIndex(scope.curIndex));
                     }
                 })
             }
