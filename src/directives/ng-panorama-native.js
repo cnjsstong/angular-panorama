@@ -12,6 +12,9 @@ angular.module('angular-panorama')
                 scope.$watch('backgroundImage', function (newValue) {
                     el.css('background-image', 'url(' + newValue + ')');
                 });
+                scope.$watch('curIndex', function(newValue) {
+                    setOffset(getOffsetByIndex(scope.curIndex));
+                });
                 console.log(el);
                 el.addClass('ng-panorama-container');
                 var ul = el.find('ul');
@@ -37,7 +40,10 @@ angular.module('angular-panorama')
                 }
 
                 function setOffset(offset) {
-                    ul.css('-webkit-transform', 'translate3d(' + offset + 'px, 0, 0)');
+                    ul.css({
+                        '-webkit-transform': 'translate3d(' + offset + 'px, 0, 0)',
+                        'transform': 'translate3d(' + offset + 'px, 0, 0)'
+                    });
                 }
 
                 var startCoords, startOffset;
@@ -67,7 +73,7 @@ angular.module('angular-panorama')
                         var threshold = el.prop('offsetWidth') * 0.12;
                         var delta = coords.x - startCoords.x;
                         console.log(delta, threshold);
-                        if (delta > threshold && targetIndex >= 0) {
+                        if (delta > threshold && targetIndex > 0) {
                             targetIndex--;
                         } else if (delta < -threshold && targetIndex < scope.pages.length - 1) {
                             targetIndex++;
