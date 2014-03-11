@@ -73,7 +73,9 @@ angular.module('angular-panorama')
                             targetIndex++;
                         }
                         console.log(scope.index, targetIndex);
-                        scope.index = targetIndex;
+                        scope.$apply(function() {
+                            scope.index = targetIndex;
+                        });
                         ul.css(cruiseOn);
 //                        ul.css('transition','all 0.2s linear');
                         setOffset(getOffsetByIndex(scope.index));
