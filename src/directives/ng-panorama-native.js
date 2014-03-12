@@ -6,7 +6,8 @@ angular.module('angular-panorama')
             scope: {
                 pages: "=ngPanoramaNative",
                 curIndex: "=ngPanoramaIndex",
-                backgroundImage: "=ngPanoramaBackgroundImage"
+                backgroundImage: "=ngPanoramaBackgroundImage",
+                reset: "=ngPanoramaReset"
             },
             link: function (scope, el, attr) {
                 scope.$watch('backgroundImage', function (newValue) {
@@ -15,6 +16,12 @@ angular.module('angular-panorama')
                 scope.$watch('curIndex', function(newValue) {
                     setOffset(getOffsetByIndex(scope.curIndex));
                 });
+                scope.$watch('reset', function(newValue) {
+                    ul.css(cruiseOff);
+                    setOffset(0);
+                    ul.css(cruiseOn);
+                });
+
                 console.log(el);
                 el.addClass('ng-panorama-container');
                 var ul = el.find('ul');
