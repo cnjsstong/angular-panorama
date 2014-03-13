@@ -11,7 +11,9 @@ angular.module('angular-panorama')
             },
             link: function (scope, el, attr) {
                 scope.$watch('backgroundImage', function (newValue) {
-                    el.css('background-image', 'url(' + newValue + ')');
+                    if(newValue) {
+                        el.css('background-image', 'url(' + newValue + ')');
+                    }
                 });
                 scope.$watch('curIndex', function(newValue) {
                     setOffset(getOffsetByIndex(scope.curIndex));
