@@ -1,6 +1,6 @@
 /**
  * Angular Panorama - Mimic Windows Phone's Panorama UI control.
- * @version v0.1.5 - 2014-03-12
+ * @version v0.1.5 - 2014-03-13
  * @link http://cnjsstong2.github.com/angular-panorama
  * @author Tong Shen <tshen@farseerinc.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -72,7 +72,7 @@ angular.module('angular-panorama')
 
                 var startCoords, startOffset;
 
-                var cruiseOn = {'transition': 'all 0.2s ease-in'};
+                var cruiseOn = {'transition': 'all 0.2s ease-in-out'};
                 var cruiseOff = {'transition': 'none'};
 //
 //                ul[0].addEventListener('webkitTransitionEnd', function() {
