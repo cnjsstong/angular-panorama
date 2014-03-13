@@ -55,7 +55,7 @@ angular.module('angular-panorama')
 
                 var startCoords, startOffset;
 
-                var cruiseOn = {'transition': 'all 0.2s ease-in-out'};
+                var cruiseOn = {'transition': 'all 0.2s ease'};
                 var cruiseOff = {'transition': 'none'};
 //
 //                ul[0].addEventListener('webkitTransitionEnd', function() {
