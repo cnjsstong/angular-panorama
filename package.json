@@ -1,36 +1,34 @@
 {
-  "name": "angular-panorama",
-  "description": "Angular Panorama - Mimic Windows Phone's Panorama UI control.",
-  "version": "0.1.5",
-  "homepage": "http://cnjsstong2.github.com/angular-panorama",
-  "author": "Tong Shen <tshen@farseerinc.com>",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/cnjsstong2/angular-panorama.git"
-  },
-  "engines": {
-    "node": ">= 0.8"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://mit-license.org/"
+    "name": "angular-panorama",
+    "description": "Angular Panorama - Mimic Windows Phone's Panorama UI control.",
+    "version": "0.1.5",
+    "homepage": "http://cnjsstong2.github.com/angular-panorama",
+    "author": "Tong Shen <tshen@farseerinc.com>",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/cnjsstong2/angular-panorama.git"
+    },
+    "engines": {
+        "node": ">= 0.8"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://mit-license.org/"
+        }
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "grunt": ">= 0.4.0",
+        "grunt-contrib-concat": "*",
+        "grunt-contrib-jshint": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-connect": "*",
+        "grunt-contrib-cssmin": "~0.6.0",
+        "grunt-contrib-copy": "~0.4.1",
+        "grunt-release": "~0.3.3",
+        "grunt-contrib-watch": "~0.4.4",
+        "load-grunt-tasks": "~0.2.0",
+        "time-grunt": "~0.2.1"
     }
-  ],
-  "dependencies": {},
-  "devDependencies": {
-    "karma": "~ 0.8.0",
-    "grunt": ">= 0.4.0",
-    "grunt-contrib-concat": "*",
-    "grunt-contrib-jshint": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-connect": "*",
-    "grunt-contrib-cssmin": "~0.6.0",
-    "grunt-release": "~0.3.3",
-    "grunt-contrib-watch": "~0.4.4"
-  },
-  "scripts": {
-    "test": "karma start test/karma.conf.js --single-run --browsers Chrome",
-    "test-server": "karma start test/karma.conf.js --browsers Chrome"
-  }
 }

@@ -1,19 +1,22 @@
-# AngularJS Touch panorama
+# Angular Panorama
 
-An AngularJS panorama implementation optimised for mobile devices.
+An AngularJS panorama implementation optimised for mobile devices, supporting width setting for each page. 
 
-Demo : http://cnjsstong2.github.io/angular-panorama
+I may add a demo here later...
 
 Comments and contributions welcome :)
 
 ## Usage :
 
- 1. Add `angular-panorama.css` and `angular-panorama.js` (from this repo) to your code:
+ 1. Add Angular Panorama to your project by:
+	bower install angular-panorama --save	
+
+ 2. Add `angular-panorama.css` and `angular-panorama.js` (from this repo) to your code:
 ```html
-<link href="lib/angular-panorama.css" rel="stylesheet" type="text/css" />
-<script src="lib/angular.js"></script>
-<script src="lib/angular-touch.js"></script>
-<script src="lib/angular-panorama.js"></script>
+<link href="bower_components/angular-panorama/angular-panorama.css" rel="stylesheet" type="text/css" />
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-panorama/angular-panorama.js"></script>
 ```
 
  2. Add a dependency to the `angular-panorama` module in your application.
@@ -21,14 +24,18 @@ Comments and contributions welcome :)
 angular.module('MyApp', ['angular-panorama']);
 ```
 
- 3. Add a `ng-panorama` attribute to your `<ul>` block and your `<li>`'s become magically swipable ;)
+ 3. Add a model (e.g. `pages` here) including width values if you need. The width values must be integers, representing percentages. For example, if you want a page to be 80% width of the viewport, just set the `width` to `80`. If you don't set the width, it will be 100% by default.
+ 
+ 4. Add a `div` with `ng-panorama` attribute to your html and wrap a `<ul>` inside. Every `<li>` child of this `<ul>` will become a swipable page with specified width.
 ```html
-<ul ng-panorama class="image">
-  <li ng-repeat="image in sportImages" style="background-image:url({{ image }});">
-    <div class="layer">{{ image }}</div>
-  </li>
-</ul>
+<div ng-panorama="pages" ng-panorama-index="index" ng-panorama-reset="reset"
+     ng-panorama-background-image="backgroundImageUrl">
+	<ul>
+		<li ng-repeat="page in pages" style="width: {{page.width}}%;" ng-cloak>
+	</ul>
+</div>
 ```
+
  4. You can also use `ng-panorama` without ng-repeat ;)
 ```html
 <ul ng-panorama class="image">
@@ -37,47 +44,20 @@ angular.module('MyApp', ['angular-panorama']);
   <li>slide #3</li>
 </ul>
 ```
- 5. Alternatively, for an infinite panorama, use the `ng-panorama-prev` and `ng-panorama-next` callbacks :
-```html
-<div ng-panorama-infinite ng-panorama-next="next(item)" ng-panorama-prev="prev(item)" ng-panorama-current="product">
-  <h1> #{{ product.id }} </h1>
-  {{ product.description }}
-</div>
-```
-
-The `prev()` and `next()` function return promises containing the prev and next slide.
 
 ## Features :
- - Mobile friendly, tested on webkit+firefox
+ - Mobile friendly, tested on Chrome + Android WebView(<4.4)
+ - Super flexible. Completely rewrited in the {{ angular way }}.
  - CSS 3D transformations with GPU accel
 
-### Regular panorama :
- - `ng-panorama-index` two way binding to control the panorama position.
- - `ng-panorama-indicator` to turn on the indicator, see demo page.
- - `ng-panorama-buffered` to buffer the panorama, good to minimize the DOM.
- - ~~`ng-panorama-cycle` to have an forever-cycling panorama.~~ (BROKEN)
- - `ng-panorama-watch` force deep watch of the ngRepeat collection (listen to add/remove items).
+## Attributes :
+ - `ng-panorama-index` adds two-way binding to control the panorama position.
+ - `ng-panorama-background-image` adds background image. 
+ - `ng-panorama-reset` reset the panorama to `index`=0 skipping animation.
 
-
-### Infinite panorama :
-
- You can setup a dynamic, infinite panorama that will load slides on demand using a promise.
- - `ng-panorama-infinite` : use this to setup an infinite panorama without the initial ul/li structure.
- - `ng-panorama-next="getNextSlide(item)"` : callback called when panorama reach the last slide, that should return a single slide. great for generating slides on-demand.
- - `ng-panorama-prev="getPrevSlide(item)"` : callback called when panorama reach the first slide, that should return a single slide. great for generating slides on-demand.
- - `ng-panorama-current` : data-binding to the current panorama item. will be sent as first argument to the prev/next callbacks.
-
-## Todo :
- - memory profiling
- - optional auto-slide
- - buffering : allow buffer size tuning (default=3 slides)
- - buffering : add intelligent indicators
 
 ## Inspirations
  - https://github.com/revolunet/angular-carousel
- - https://github.com/ajoslin/angular-mobile-nav
- - http://mobile.smashingmagazine.com/2012/06/21/play-with-hardware-accelerated-css/
- - Thanks @ganarajpr @bennadel and angular folks for all the tips :)
 
 ## License
-As AngularJS itself, this module is released under the permissive [MIT license](http://mit-license.org). Your contributions are always welcome.
+Angular Panorama is created by Tong Shen from [FotoDish](http://fotodish.com), and is distributed under the [MIT license](http://mit-license.org) .

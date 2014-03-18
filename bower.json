@@ -2,8 +2,16 @@
     "author": "cnjsstong",
     "name": "angular-panorama",
     "description": "Mimic Windows Phone's panorama UI control.",
-    "version": "0.1.5",
+    "version": "0.2.1",
     "homepage": "https://github.com/cnjsstong2/angular-panorama",
+    "ignore": [
+        "src",
+        "Gruntfile.js",
+        "package.json",
+        "README.md",
+        "demo",
+        ".gitignore"
+    ],
     "repository": {
         "type": "git",
         "url": "git://github.com/cnjsstong2/angular-panorama.git"
