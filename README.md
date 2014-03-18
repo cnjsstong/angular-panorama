@@ -36,13 +36,27 @@ angular.module('MyApp', ['angular-panorama']);
 </div>
 ```
 
- 4. You can also use `ng-panorama` without ng-repeat ;)
+ 4. You can also use `ng-panorama` without ng-repeat, or even a mix.
 ```html
-<ul ng-panorama class="image">
-  <li>slide #1</li>
-  <li>slide #2</li>
-  <li>slide #3</li>
-</ul>
+<script>
+// in your controller code
+	$scope.pages = [
+		{width: 80},
+		{width: 80},
+		{width: 80},
+		{width: 80}
+	];
+	
+</script>
+<div ng-panorama="pages" ng-panorama-index="index" ng-panorama-reset="reset"
+     ng-panorama-background-image="backgroundImageUrl">
+	<ul>
+		<li style="width: 80%;">
+		<li style="width: 80%;">
+		<li style="width: 80%;">
+		<li style="width: 80%;">
+	</ul>
+</div>
 ```
 
 ## Features :
