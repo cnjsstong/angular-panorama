@@ -1,21 +1,21 @@
 angular.module('angular-panorama')
 
-    .directive('ngPanorama', ['$swipe', '$document', '$window', function ($swipe, $document, $window) {
+    .directive('ngPanorama', ['$swipe', function ($swipe) {
         return {
             restrict: 'A',
             scope: {
                 pages: "=ngPanorama",
-                curIndex: "=ngPanoramaIndex",
-                backgroundImage: "=ngPanoramaBackgroundImage",
+                i: "=ngPanoramaIndex",
+                bg: "=ngPanoramaBackgroundImage",
                 reset: "=ngPanoramaReset"
             },
             link: function (scope, el, attr) {
-                scope.$watch('backgroundImage', function (newValue) {
+                scope.$watch('bg', function (newValue) {
                     if (newValue) {
                         el.css('background-image', 'url(' + newValue + ')');
                     }
                 });
-                scope.$watch('curIndex', function (newValue) {
+                scope.$watch('i', function (newValue) {
                     setOffset(getOffsetByIndex(newValue));
                 });
                 scope.$watch('reset', function (newValue) {
@@ -27,8 +27,8 @@ angular.module('angular-panorama')
                 el.addClass('ng-panorama-container');
                 var ul = el.find('ul');
                 ul.addClass('ng-panorama-slides');
-                if (!scope.curIndex) {
-                    scope.curIndex = 0;
+                if (!scope.i) {
+                    scope.i = 0;
                 }
                 function getOffsetByIndex(index) {
                     var offset = 0;
@@ -67,15 +67,14 @@ angular.module('angular-panorama')
                 $swipe.bind(el, {
                     start: function (coords) {
                         startCoords = coords;
-                        startOffset = getOffsetByIndex(scope.curIndex);
+                        startOffset = getOffsetByIndex(scope.i);
                         ul.css(cruiseOff);
-//                        ul.css('transition','none');
                     },
                     move: function (coords) {
                         setOffset(startOffset + coords.x - startCoords.x);
                     },
                     end: function (coords) {
-                        var targetIndex = scope.curIndex;
+                        var targetIndex = scope.i;
                         var threshold = el.prop('offsetWidth') * 0.1;
                         var delta = coords.x - startCoords.x;
                         if (delta > threshold && targetIndex > 0) {
@@ -84,16 +83,16 @@ angular.module('angular-panorama')
                             targetIndex++;
                         }
                         scope.$apply(function () {
-                            scope.curIndex = targetIndex;
+                            scope.i = targetIndex;
                         });
                         ul.css(cruiseOn);
-                        setOffset(getOffsetByIndex(scope.curIndex));
+                        setOffset(getOffsetByIndex(scope.i));
                     },
                     cancel: function (coords) {
                         ul.css(cruiseOn);
-                        setOffset(getOffsetByIndex(scope.curIndex));
+                        setOffset(getOffsetByIndex(scope.i));
                     }
-                })
+                });
             }
-        }
+        };
     }]);
